@@ -1,0 +1,2 @@
+-- Intended table: user_achievements.
+-- Stores earned and in-progress achievement records linked to users and achievements.

@@ -1,0 +1,2 @@
+-- Intended table: achievements.
+-- Stores available club achievements, descriptions, tiers, point rules, and eligibility criteria.

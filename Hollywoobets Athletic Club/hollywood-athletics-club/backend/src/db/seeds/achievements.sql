@@ -1,0 +1,2 @@
+-- Intended seed data for default club achievements.
+-- Add non-secret achievement rows here when the Supabase schema is implemented.
