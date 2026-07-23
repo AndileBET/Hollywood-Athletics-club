@@ -11,18 +11,47 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { useEffect, useState } from 'react';
 import ActivityRow from '../components/ActivityRow.jsx';
 import ChartCard from '../components/ChartCard.jsx';
-import {
-  activities,
-  activityCountData,
-  monthlyDistanceData,
-  paceTrendData,
-} from '../data/mockData.js';
+import { getPerformanceData } from '../api/client.js';
 
 const chartMargin = { top: 12, right: 12, bottom: 0, left: -18 };
 
 export default function Performance() {
+  const [performanceData, setPerformanceData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getPerformanceData()
+      .then((data) => {
+        if (isMounted) {
+          setPerformanceData(data);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          setErrorMessage(error.message);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (errorMessage) {
+    return <BackendState title="Performance unavailable" message={errorMessage} />;
+  }
+
+  if (!performanceData) {
+    return <BackendState title="Loading performance" message="Fetching activity data from the backend." />;
+  }
+
+  const { activities, activityCountData, monthlyDistanceData, paceTrendData } = performanceData;
+
   return (
     <div className="page-stack">
       <section className="page-header">
@@ -89,5 +118,15 @@ export default function Performance() {
         </div>
       </section>
     </div>
+  );
+}
+
+function BackendState({ title, message }) {
+  return (
+    <section className="panel">
+      <p className="eyebrow">Backend</p>
+      <h2>{title}</h2>
+      <p>{message}</p>
+    </section>
   );
 }

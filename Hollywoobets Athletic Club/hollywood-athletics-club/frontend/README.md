@@ -1,6 +1,6 @@
 # Hollywood Athletics Club Frontend
 
-Premium React dashboard for a Strava-powered athletics club app. This starter uses mock data while the Supabase and Strava backend is being prepared.
+Premium React dashboard for a Strava-powered athletics club app. The app reads athlete, activity, profile, and performance data from the backend API.
 
 ## Stack
 
@@ -16,7 +16,13 @@ npm install
 npm run dev
 ```
 
-The app starts on the Dashboard view and uses mock data from `src/data/mockData.js`.
+The app starts on the Dashboard view and expects the backend to be running.
+
+Create a local `.env` file in this frontend folder:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:3000
+```
 
 ## Pages
 
@@ -25,13 +31,10 @@ The app starts on the Dashboard view and uses mock data from `src/data/mockData.
 - Profile: built with member details, activity totals, achievement statistics, and Strava status.
 - Rewards, Community, Marketplace: polished coming soon states.
 
-## API Placeholders
-
-Future frontend API helpers live in `src/api/` and assume these backend endpoints:
+## API
 
 - `GET /api/dashboard`
 - `GET /api/performance`
 - `GET /api/profile`
-- `GET /api/rewards`
-- `GET /api/community`
-- `GET /api/marketplace`
+- `GET /api/strava/activities`
+- `POST /api/strava/sync`

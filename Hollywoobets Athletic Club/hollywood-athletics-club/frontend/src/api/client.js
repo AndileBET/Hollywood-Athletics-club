@@ -2,18 +2,39 @@ import { API_ENDPOINTS } from './endpoints.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
-export async function getFutureEndpoint(name) {
+export async function getEndpoint(name, options = {}) {
   const endpoint = API_ENDPOINTS[name];
 
   if (!endpoint) {
     throw new Error(`Unknown API endpoint: ${name}`);
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`);
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+    },
+    ...options,
+  });
 
   if (!response.ok) {
-    throw new Error(`Request failed for ${endpoint}`);
+    const message = await response.text();
+    throw new Error(message || `Request failed for ${endpoint}`);
   }
 
   return response.json();
 }
+
+export const getDashboardData = () => getEndpoint('dashboard');
+export const getPerformanceData = () => getEndpoint('performance');
+export const getProfileData = () => getEndpoint('profile');
+
+export const syncStravaActivities = () =>
+  getEndpoint('stravaSync', {
+    method: 'POST',
+    body: JSON.stringify({}),
+  });
+
+export const getStravaAuthUrl = () => getEndpoint('stravaAuthUrl');
+
+export const getFutureEndpoint = getEndpoint;

@@ -1,1 +1,9 @@
-// Placeholder for future athlete profile API routes.
+import { Router } from 'express';
+import { getProfile, saveProfile } from '../controllers/profile.controller.js';
+
+const router = Router();
+
+router.get('/', getProfile);
+router.post('/', saveProfile);
+
+export default router;

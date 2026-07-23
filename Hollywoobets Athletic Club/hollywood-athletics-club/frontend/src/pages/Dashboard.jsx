@@ -1,10 +1,43 @@
 import { Award, Flame, Footprints, Gauge, PlugZap, Trophy } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import ActivityRow from '../components/ActivityRow.jsx';
 import AchievementBadge from '../components/AchievementBadge.jsx';
 import StatCard from '../components/StatCard.jsx';
-import { achievements, activities, athlete, dashboardStats } from '../data/mockData.js';
+import { getDashboardData } from '../api/client.js';
 
 export default function Dashboard() {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    let isMounted = true;
+
+    getDashboardData()
+      .then((data) => {
+        if (isMounted) {
+          setDashboardData(data);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          setErrorMessage(error.message);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (errorMessage) {
+    return <BackendState title="Dashboard unavailable" message={errorMessage} />;
+  }
+
+  if (!dashboardData) {
+    return <BackendState title="Loading dashboard" message="Fetching athlete data from the backend." />;
+  }
+
+  const { achievements, activities, athlete, dashboardStats } = dashboardData;
   const recentActivities = activities.slice(0, 4);
 
   return (
@@ -15,7 +48,7 @@ export default function Dashboard() {
           <h2>Welcome back, {athlete.name.split(' ')[0]}</h2>
           <p>
             Your Strava-powered club dashboard is tracking distance, pace,
-            consistency, and rewards with mock data for this starter build.
+            consistency, and rewards through the backend integration.
           </p>
         </div>
         <div className="strava-card">
@@ -82,5 +115,15 @@ export default function Dashboard() {
         </div>
       </section>
     </div>
+  );
+}
+
+function BackendState({ title, message }) {
+  return (
+    <section className="panel">
+      <p className="eyebrow">Backend</p>
+      <h2>{title}</h2>
+      <p>{message}</p>
+    </section>
   );
 }
