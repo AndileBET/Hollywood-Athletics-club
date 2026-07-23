@@ -15,7 +15,7 @@ const pages = {
 };
 
 export default function App() {
-  const [activePage, setActivePage] = useState('Dashboard');
+  const [activePage, setActivePage] = useState('Profile');
   const ActivePage = useMemo(() => pages[activePage] || Dashboard, [activePage]);
 
   return (

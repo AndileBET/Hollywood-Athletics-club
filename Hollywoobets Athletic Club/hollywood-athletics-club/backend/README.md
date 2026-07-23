@@ -1,41 +1,75 @@
 # Hollywood Athletics Club Backend
 
-Backend starter structure for the Hollywood Athletics Club app. This folder is intentionally scaffold-only for now.
+Express API for the Hollywood Athletics Club frontend, with Supabase storage and Strava OAuth/activity sync hooks.
 
-## Planned Stack
+## Run Locally
 
-- Node.js
-- Express
-- Supabase PostgreSQL
-- Strava OAuth and activity sync
+```bash
+npm install
+npm run dev
+```
 
-## Structure
-
-- `src/app.js`: future Express app setup.
-- `src/server.js`: future server bootstrap.
-- `src/config/`: environment and Supabase client setup placeholders.
-- `src/routes/`: future API route files for auth, Strava, dashboard, performance, profile, and related app areas.
-- `src/controllers/`: future request handlers.
-- `src/services/`: future Strava, token, activity, points, stats, achievements, and Supabase helpers.
-- `src/middleware/`: future shared Express middleware.
-- `src/db/migrations/`: Supabase PostgreSQL migration placeholders.
-- `src/db/seeds/`: seed data placeholders.
+The API runs on `http://127.0.0.1:3000` by default.
 
 ## Environment
 
-Copy `.env.example` to `.env` when backend implementation begins, then add real values locally. Do not commit real Supabase or Strava secrets.
+Create a local `.env` file in this backend folder, then add your own Supabase and Strava values.
 
-## Strava OAuth
+```env
+NODE_ENV=development
+PORT=3000
+CLIENT_URL=http://127.0.0.1:5173
+API_URL=http://127.0.0.1:3000
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+DEFAULT_USER_ID=
+STRAVA_CLIENT_ID=
+STRAVA_CLIENT_SECRET=
+STRAVA_REDIRECT_URI=http://127.0.0.1:3000/api/auth/strava/callback
+```
 
-Strava authorization, callback handling, token refresh, and activity import logic should be added later under:
+Important values:
 
-- `src/routes/auth.routes.js`
-- `src/controllers/auth.controller.js`
-- `src/routes/strava.routes.js`
-- `src/controllers/strava.controller.js`
-- `src/services/strava.service.js`
-- `src/services/token.service.js`
+- `SUPABASE_URL`: your Supabase project URL.
+- `SUPABASE_SERVICE_ROLE_KEY`: backend-only Supabase service role key.
+- `DEFAULT_USER_ID`: the `public.profiles.id` value to use when the frontend does not pass a user ID.
+- `STRAVA_CLIENT_ID`: your Strava app client ID.
+- `STRAVA_CLIENT_SECRET`: your Strava app client secret.
+- `STRAVA_REDIRECT_URI`: must match the callback URL configured in Strava.
 
-## Supabase
+Do not commit real `.env` files or real API keys.
 
-Supabase client setup should be added later in `src/config/supabase.js`, with database helper functions in `src/services/supabase.service.js`.
+## Reusable Services
+
+API setup is centralized in two backend services:
+
+- `src/services/supabase.service.js`: creates and reuses the Supabase client, validates Supabase configuration, resolves the local user ID, and contains profile helpers.
+- `src/services/strava.service.js`: validates Strava configuration, builds OAuth URLs, exchanges and refreshes tokens, stores tokens, and fetches Strava activities.
+
+When adding new backend features, import these services instead of creating another Supabase or Strava client.
+
+## API Routes
+
+- `GET /health`: service health check.
+- `GET /api/dashboard`: dashboard profile, stats, activities, and achievements.
+- `GET /api/performance`: activity history and chart data.
+- `GET /api/profile`: athlete profile and profile stats.
+- `POST /api/profile`: upsert an athlete profile row.
+- `GET /api/auth/strava/url?userId=<uuid>`: generate a Strava OAuth URL.
+- `GET /api/auth/strava/callback`: Strava OAuth callback.
+- `GET /api/strava/activities?userId=<uuid>`: list stored activities.
+- `POST /api/strava/sync?userId=<uuid>`: fetch Strava activities and save them to Supabase.
+
+Dashboard, performance, profile, and activity endpoints require Supabase configuration and a user ID. Use `DEFAULT_USER_ID` for local development after creating your first `public.profiles` row.
+
+## Database
+
+Run the SQL files in `src/db/migrations` in order, then run `src/db/seeds/achievements.sql`.
+
+The tables created are:
+
+- `profiles`
+- `strava_connections`
+- `activities`
+- `achievements`
+- `user_achievements`
