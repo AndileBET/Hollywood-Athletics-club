@@ -1,0 +1,2 @@
+Install dependencies: npm Install
+to run (go to front-end folder and run): npm.cmd run dev

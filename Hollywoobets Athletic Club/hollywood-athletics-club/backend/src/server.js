@@ -1,1 +1,3 @@
-// Placeholder for future server startup and port binding.
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
