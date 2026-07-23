@@ -1,0 +1,2 @@
+-- Intended table: users.
+-- Stores athlete profile records, Supabase auth identifiers, Strava athlete IDs, and membership metadata.

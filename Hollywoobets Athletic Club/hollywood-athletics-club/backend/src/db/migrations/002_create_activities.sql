@@ -1,0 +1,2 @@
+-- Intended table: activities.
+-- Stores synced Strava activity records, distances, durations, pace data, elevation, and earned points.
