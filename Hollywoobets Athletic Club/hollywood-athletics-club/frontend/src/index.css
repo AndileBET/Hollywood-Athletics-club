@@ -248,6 +248,35 @@ button {
   font-size: 13px;
 }
 
+.connection-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid rgba(249, 200, 14, 0.3);
+  border-radius: 8px;
+  padding: 0 14px;
+  color: #171107;
+  background: var(--gold);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.action-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -573,8 +602,60 @@ button {
   width: 12px;
   height: 12px;
   border-radius: 999px;
+}
+
+.status-dot.is-connected {
   background: #24d267;
   box-shadow: 0 0 0 6px rgba(36, 210, 103, 0.13);
+}
+
+.status-dot.is-disconnected {
+  background: #ff7b72;
+  box-shadow: 0 0 0 6px rgba(255, 123, 114, 0.16);
+}
+
+.info-banner,
+.empty-state {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: #17151b;
+}
+
+.info-banner {
+  margin-top: 16px;
+  padding: 14px 16px;
+  color: #ddd7e7;
+}
+
+.success-banner {
+  border-color: rgba(36, 210, 103, 0.35);
+  background: rgba(36, 210, 103, 0.08);
+}
+
+.empty-state {
+  padding: 18px;
+}
+
+.empty-state h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .coming-soon {
