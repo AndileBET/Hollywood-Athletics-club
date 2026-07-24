@@ -21,7 +21,13 @@ export default function Sidebar({ activePage, onNavigate }) {
     <>
       <aside className="sidebar">
         <div className="brand-block">
-          <div className="brand-mark">HA</div>
+          <div className="brand-mark logo-mark">
+  <img
+    src="/images/branding/hollywoodbets-logo.png"
+    alt="Hollywoodbets logo"
+    className="brand-logo"
+  />
+</div>
           <div>
             <p className="eyebrow">Club Dashboard</p>
             <h1>Hollywood Athletics</h1>
