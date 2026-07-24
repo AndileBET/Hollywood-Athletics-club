@@ -47,7 +47,7 @@ export default function Performance() {
   }
 
   if (!performanceData) {
-    return <BackendState title="Loading performance" message="Fetching activity data from the backend." />;
+    return <BackendState title="Loading performance" message="Loading data..." />;
   }
 
   const { activities, activityCountData, monthlyDistanceData, paceTrendData } = performanceData;

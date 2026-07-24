@@ -87,7 +87,7 @@ export default function Dashboard() {
   }
 
   if (!dashboardData) {
-    return <BackendState title="Loading dashboard" message="Fetching athlete data from the backend." />;
+    return <BackendState title="Loading dashboard" message="Loading data..." />;
   }
 
   const { achievements, activities, athlete, dashboardStats } = dashboardData;
@@ -110,12 +110,8 @@ export default function Dashboard() {
             <PlugZap aria-hidden="true" size={23} />
           </div>
           <div>
-            <span>{isStravaConnected ? 'Strava Connected' : 'Connect with Strava'}</span>
-            <p>
-              {isStravaConnected
-                ? 'Your dashboard reads imported Strava activities from the backend activity store.'
-                : 'Authorize Strava first, then import your latest activities into the club dashboard.'}
-            </p>
+            <span>{athlete.stravaConnected ? 'Strava Connected' : 'Connected with Strava'}</span>
+            <p>Sync-ready structure for activity imports and OAuth.</p>
           </div>
         </div>
       </section>
