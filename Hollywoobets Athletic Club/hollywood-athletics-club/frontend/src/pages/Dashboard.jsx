@@ -74,6 +74,7 @@ export default function Dashboard() {
         response.imported > 0
           ? `Imported ${response.imported} Strava activit${response.imported === 1 ? 'y' : 'ies'} into the club dashboard.`
           : 'No new Strava activities were available to import.',
+          console.log(stravaActivity),
       );
     } catch (error) {
       setErrorMessage(error.message);
@@ -142,11 +143,13 @@ export default function Dashboard() {
           <strong>{isStravaConnected ? 'Ready to import from Strava' : 'No Strava connection yet'}</strong>
         </div>
 
-        <p>
+        {/* <p>
           Strava sends activity objects through the API, and this app normalizes each one into your own
           {' '}<code>activities</code>{' '}
           table with distance, moving time, pace, elevation, and points.
-        </p>
+        </p> */}
+
+        
 
         {syncMessage ? <div className="info-banner success-banner">{syncMessage}</div> : null}
       </section>
@@ -221,7 +224,6 @@ export default function Dashboard() {
 function BackendState({ title, message }) {
   return (
     <section className="panel">
-      <p className="eyebrow">Backend</p>
       <h2>{title}</h2>
       <p>{message}</p>
     </section>
