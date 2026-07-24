@@ -31,7 +31,7 @@ export default function Profile() {
   }
 
   if (!profileData) {
-    return <BackendState title="Loading profile" message="Fetching profile from Supabase." />;
+    return <BackendState title="Loading profile" message="Loading Data...." />;
   }
 
   const { athlete } = profileData;

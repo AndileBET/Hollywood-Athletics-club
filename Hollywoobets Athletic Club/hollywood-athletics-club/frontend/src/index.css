@@ -248,6 +248,35 @@ button {
   font-size: 13px;
 }
 
+.connection-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid rgba(249, 200, 14, 0.3);
+  border-radius: 8px;
+  padding: 0 14px;
+  color: #171107;
+  background: var(--gold);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.action-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -573,8 +602,60 @@ button {
   width: 12px;
   height: 12px;
   border-radius: 999px;
+}
+
+.status-dot.is-connected {
   background: #24d267;
   box-shadow: 0 0 0 6px rgba(36, 210, 103, 0.13);
+}
+
+.status-dot.is-disconnected {
+  background: #ff7b72;
+  box-shadow: 0 0 0 6px rgba(255, 123, 114, 0.16);
+}
+
+.info-banner,
+.empty-state {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: #17151b;
+}
+
+.info-banner {
+  margin-top: 16px;
+  padding: 14px 16px;
+  color: #ddd7e7;
+}
+
+.success-banner {
+  border-color: rgba(36, 210, 103, 0.35);
+  background: rgba(36, 210, 103, 0.08);
+}
+
+.empty-state {
+  padding: 18px;
+}
+
+.empty-state h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .coming-soon {
@@ -720,7 +801,6 @@ button {
     width: 100%;
   }
 }
-
 .marketplace-hero,
 .community-hero {
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -940,571 +1020,20 @@ button {
     font-size: 30px;
   }
 }
-.rewards-page {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-  border-radius: 8px;
-  background: #f4f6fa;
-  color: #111014;
-  padding: 24px;
-}
-
-.rewards-title {
-  margin-bottom: 18px;
-}
-
-.rewards-title h2 {
-  margin: 0;
-  color: #09090d;
-  font-size: 28px;
-  line-height: 1.15;
-}
-
-.rewards-title p {
-  margin: 6px 0 0;
-  color: #4e5564;
-  font-size: 14px;
-}
-
-.rewards-level-card,
-.rewards-panel {
-  border: 1px solid #dce1e9;
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.rewards-level-card {
-  border-color: var(--gold);
-  margin-bottom: 18px;
-  padding: 22px;
-}
-
-.rewards-level-top,
-.tier-progress div,
-.achievement-progress-meta,
-.achievement-card-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.rewards-level-heading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.rewards-level-heading h3,
-.rewards-panel h3,
-.tier-card h4,
-.achievement-progress-card h4,
-.earned-card h4 {
-  margin: 0;
-  color: #09090d;
-}
-
-.rewards-star,
-.achievement-icon {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 8px;
-}
-
-.rewards-star {
-  width: 34px;
-  height: 34px;
-  color: #d59a00;
-  background: #fff6ce;
-}
-
-.rewards-points-badge,
-.tier-card-heading span,
-.achievement-card-bottom span,
-.earned-card div > span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  border-radius: 8px;
-  padding: 4px 10px;
-  font-weight: 800;
-  font-size: 12px;
-}
-
-.rewards-points-badge,
-.tier-card-heading span {
-  color: #505766;
-  background: #e8ebf0;
-}
-
-.benefits-block {
-  margin-top: 24px;
-}
-
-.benefits-block h4 {
-  margin: 0 0 12px;
-  color: #09090d;
-  font-size: 15px;
-}
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px 32px;
-  border-bottom: 1px solid #dce1e9;
-  padding-bottom: 18px;
-}
-
-.benefits-grid span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #242a35;
-  font-size: 14px;
-}
-
-.benefits-grid svg {
-  color: #00a64f;
-}
-
-.tier-progress {
-  margin-top: 14px;
-}
-
-.tier-progress strong,
-.achievement-progress-meta span,
-.achievement-progress-meta strong {
-  color: #09090d;
-  font-size: 13px;
-}
-
-.tier-progress div span,
-.tier-progress p {
-  color: #242a35;
-  font-size: 13px;
-}
-
-.tier-progress p {
-  margin: 9px 0 0;
-}
-
-.rewards-progress-track {
-  height: 7px;
+.logo-mark {
+  background: #4d1b75;
+  padding: 6px;
   overflow: hidden;
-  border-radius: 999px;
-  background: #d5d9e1;
 }
 
-.tier-progress .rewards-progress-track,
-.achievement-progress-card .rewards-progress-track {
-  margin-top: 8px;
-}
-
-.rewards-progress-track div {
-  height: 100%;
-  border-radius: inherit;
-  background: #08080c;
-}
-
-.rewards-panel {
-  margin-top: 16px;
-  padding: 18px;
-}
-
-.rewards-panel > h3 {
-  margin-bottom: 14px;
-  font-size: 16px;
-}
-
-.tier-grid,
-.achievement-progress-grid,
-.earned-grid {
-  display: grid;
-  gap: 14px;
-}
-
-.tier-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.achievement-progress-grid,
-.earned-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.tier-card,
-.achievement-progress-card,
-.earned-card {
-  border: 1px solid #d9dee7;
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.tier-card {
-  min-height: 166px;
-  padding: 16px;
-}
-
-.tier-card.is-active {
-  border-color: var(--gold);
-  background: #fffdef;
-}
-
-.tier-card.bronze {
-  background: #f3fff7;
-  border-color: #a7efc2;
-}
-
-.tier-card-heading {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.tier-card-heading svg {
-  color: #848b98;
-}
-
-.tier-card.bronze .tier-card-heading svg {
-  color: #c97932;
-}
-
-.tier-card.gold .tier-card-heading svg {
-  color: #dca100;
-}
-
-.tier-card h4 {
-  font-size: 17px;
-}
-
-.tier-card p {
-  margin: 3px 0 0;
-  color: #3e4654;
-  font-size: 13px;
-}
-
-.tier-card ul {
-  display: grid;
-  gap: 7px;
-  margin: 14px 0 0;
-  padding-left: 18px;
-  color: #3e4654;
-  font-size: 12px;
-}
-
-.achievement-progress-card {
-  padding: 14px;
-}
-
-.achievement-card-top {
-  display: flex;
-  gap: 12px;
-}
-
-.achievement-icon {
-  width: 38px;
-  height: 38px;
-}
-
-.achievement-icon.blue {
-  color: #3464ff;
-  background: #e9f0ff;
-}
-
-.achievement-icon.green {
-  color: #009247;
-  background: #e8fff0;
-}
-
-.achievement-progress-card h4,
-.earned-card h4 {
-  font-size: 15px;
-}
-
-.achievement-progress-card p,
-.earned-card p {
-  margin: 2px 0 0;
-  color: #4f5664;
-  font-size: 12px;
-}
-
-.achievement-progress-meta {
-  margin-top: 14px;
-}
-
-.achievement-card-bottom {
-  margin-top: 10px;
-}
-
-.achievement-card-bottom span {
-  color: #0a1633;
-  background: #e7efff;
-}
-
-.achievement-card-bottom small,
-.earned-status small {
-  color: #697181;
-  font-size: 11px;
-}
-
-.earned-card {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 12px;
-  border-color: #9be9ba;
-  background: #f4fff8;
-  padding: 16px;
-}
-
-.earned-card div > span {
-  margin-top: 12px;
-  color: #ffffff;
-  background: #009247;
-}
-
-.earned-status {
-  display: grid;
-  justify-items: end;
-  gap: 22px;
-  color: #009247;
-  text-align: right;
-}
-
-@media (max-width: 1120px) {
-  .tier-grid,
-  .achievement-progress-grid,
-  .earned-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .rewards-page {
-    padding: 16px;
-  }
-
-  .rewards-level-card,
-  .rewards-panel {
-    padding: 14px;
-  }
-
-  .rewards-level-top,
-  .tier-progress div {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .benefits-grid,
-  .tier-grid,
-  .achievement-progress-grid,
-  .earned-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .earned-card {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .earned-status {
-    grid-column: 2;
-    justify-items: start;
-    gap: 6px;
-    text-align: left;
-  }
-}
-
-/* Rewards page: aligned with the main Hollywood Athletics dashboard theme. */
-.rewards-page {
-  width: 100%;
-  margin: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--text);
-  padding: 0;
-  display: grid;
-  gap: 18px;
-}
-
-.rewards-title,
-.rewards-level-card,
-.rewards-panel {
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 8px;
-  background: rgba(17, 16, 20, 0.92);
-}
-
-.rewards-title {
-  margin-bottom: 0;
-  padding: 28px;
-  background:
-    linear-gradient(135deg, rgba(249, 200, 14, 0.18), transparent 34%),
-    linear-gradient(135deg, rgba(127, 60, 255, 0.23), transparent 58%),
-    #111014;
-  box-shadow: var(--shadow);
-}
-
-.rewards-title h2 {
-  margin: 8px 0 10px;
-  color: var(--text);
-  font-size: clamp(30px, 4vw, 48px);
-  line-height: 1.04;
-}
-
-.rewards-title::before {
-  content: 'Rewards Program';
+.brand-logo {
+  width: 160%;
+  height: 160%;
+  object-fit: contain;
   display: block;
-  color: var(--gold-soft);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
-
-.rewards-title p {
-  margin: 0;
-  max-width: 720px;
-  color: #d4cfdb;
-  font-size: 16px;
-}
-
-.rewards-level-card,
-.rewards-panel {
-  padding: 20px;
-}
-
-.rewards-level-card {
-  border-color: rgba(249, 200, 14, 0.34);
-  margin-bottom: 0;
-  background:
-    linear-gradient(135deg, rgba(249, 200, 14, 0.1), transparent 32%),
-    rgba(17, 16, 20, 0.92);
-}
-
-.rewards-level-heading h3,
-.rewards-panel h3,
-.tier-card h4,
-.achievement-progress-card h4,
-.earned-card h4 {
-  color: var(--text);
-}
-
-.rewards-star {
-  color: #171107;
-  background: var(--gold);
-  box-shadow: 0 14px 26px rgba(249, 200, 14, 0.18);
-}
-
-.rewards-points-badge,
-.tier-card-heading span {
-  color: #171107;
-  background: var(--gold);
-}
-
-.benefits-block h4,
-.tier-progress strong,
-.achievement-progress-meta span,
-.achievement-progress-meta strong {
-  color: var(--text);
-}
-
-.benefits-grid {
-  border-bottom-color: var(--line);
-}
-
-.benefits-grid span,
-.tier-progress div span,
-.tier-progress p,
-.tier-card p,
-.tier-card ul,
-.achievement-progress-card p,
-.earned-card p,
-.achievement-card-bottom small,
-.earned-status small {
-  color: #d7d1de;
-}
-
-.benefits-grid svg,
-.earned-status {
-  color: #24d267;
-}
-
-.rewards-progress-track {
-  background: #2b2634;
-}
-
-.rewards-progress-track div {
-  background: var(--gold);
-}
-
-.tier-card,
-.achievement-progress-card,
-.earned-card {
-  border-color: var(--line);
-  background: #17151b;
-}
-
-.tier-card {
-  min-height: 176px;
-}
-
-.tier-card.is-active {
-  border-color: var(--gold);
-  background:
-    linear-gradient(135deg, rgba(249, 200, 14, 0.12), transparent 48%),
-    #17151b;
-}
-
-.tier-card.bronze {
-  border-color: rgba(201, 121, 50, 0.42);
-  background: #17151b;
-}
-
-.tier-card-heading svg {
-  color: #8d8798;
-}
-
-.tier-card.bronze .tier-card-heading svg {
-  color: #c97932;
-}
-
-.tier-card.gold .tier-card-heading svg,
-.tier-card.is-active .tier-card-heading svg {
-  color: var(--gold);
-}
-
-.achievement-icon.blue,
-.achievement-icon.green {
-  color: var(--gold);
-  background: rgba(249, 200, 14, 0.14);
-}
-
-.achievement-progress-card {
-  min-height: 146px;
-}
-
-.achievement-card-bottom span,
-.earned-card div > span {
-  color: #171107;
-  background: var(--gold);
-}
-
-.earned-card {
-  border-color: rgba(36, 210, 103, 0.28);
-  background:
-    linear-gradient(135deg, rgba(36, 210, 103, 0.08), transparent 42%),
-    #17151b;
-}
-
-@media (max-width: 720px) {
-  .rewards-title,
-  .rewards-level-card,
-  .rewards-panel {
-    padding: 16px;
-  }
-
-  .rewards-title h2 {
-    font-size: 30px;
-  }
+.brand-mark {
+  width: 180px;
+  height: 110px;
+  border-radius: 14px;
 }
