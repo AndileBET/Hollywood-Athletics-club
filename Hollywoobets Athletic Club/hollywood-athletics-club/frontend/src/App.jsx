@@ -5,12 +5,12 @@ import Performance from './pages/Performance.jsx';
 import Profile from './pages/Profile.jsx';
 import Community from './pages/Community.jsx';
 import Marketplace from './pages/Marketplace.jsx';
-import ComingSoon from './components/ComingSoon.jsx';
+import Rewards from './pages/Rewards.jsx';
 
 const pages = {
   Dashboard,
   Performance,
-  Rewards: () => <ComingSoon title="Rewards" />,
+  Rewards,
   Community,
   Marketplace,
   Profile,
