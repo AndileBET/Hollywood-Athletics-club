@@ -3,14 +3,16 @@ import Layout from './components/Layout.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Performance from './pages/Performance.jsx';
 import Profile from './pages/Profile.jsx';
+import Community from './pages/Community.jsx';
+import Marketplace from './pages/Marketplace.jsx';
 import ComingSoon from './components/ComingSoon.jsx';
 
 const pages = {
   Dashboard,
   Performance,
   Rewards: () => <ComingSoon title="Rewards" />,
-  Community: () => <ComingSoon title="Community" />,
-  Marketplace: () => <ComingSoon title="Marketplace" />,
+  Community,
+  Marketplace,
   Profile,
 };
 
