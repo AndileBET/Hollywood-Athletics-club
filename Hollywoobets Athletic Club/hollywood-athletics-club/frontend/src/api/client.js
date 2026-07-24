@@ -17,22 +17,21 @@ export async function getEndpoint(name, options = {}) {
     ...options,
   });
 
+  const contentType = response.headers.get('content-type') || '';
+  const rawBody = await response.text();
+
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `Request failed for ${endpoint}`);
+    throw new Error(rawBody || `Request failed for ${endpoint}`);
   }
 
-  const contentType = response.headers.get('content-type') || '';
-
   if (!contentType.includes('application/json')) {
-    const body = await response.text();
     throw new Error(
-      `Expected JSON from ${endpoint}, but received ${contentType || 'unknown content type'}. ` +
-      `This usually means the frontend is hitting the wrong server. Response starts with: ${body.slice(0, 80)}`,
+      `Expected JSON from ${endpoint}, received ${contentType || 'unknown content type'}. ` +
+        'Check VITE_API_BASE_URL or the Vite /api proxy.',
     );
   }
 
-  return response.json();
+  return rawBody ? JSON.parse(rawBody) : null;
 }
 
 export const getDashboardData = () => getEndpoint('dashboard');
