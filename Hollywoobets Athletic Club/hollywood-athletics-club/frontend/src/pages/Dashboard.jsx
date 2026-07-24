@@ -1,21 +1,40 @@
-import { Award, Flame, Footprints, Gauge, PlugZap, Trophy } from 'lucide-react';
+import { Award, Flame, Footprints, Gauge, LoaderCircle, PlugZap, RefreshCw, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ActivityRow from '../components/ActivityRow.jsx';
 import AchievementBadge from '../components/AchievementBadge.jsx';
 import StatCard from '../components/StatCard.jsx';
-import { getDashboardData } from '../api/client.js';
+import { getDashboardData, getStravaAuthUrl, syncStravaActivities } from '../api/client.js';
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [syncMessage, setSyncMessage] = useState('');
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  async function loadDashboardData() {
+    const data = await getDashboardData();
+    setDashboardData(data);
+    setErrorMessage('');
+
+    return data;
+  }
 
   useEffect(() => {
     let isMounted = true;
 
-    getDashboardData()
+    loadDashboardData()
       .then((data) => {
-        if (isMounted) {
-          setDashboardData(data);
+        if (!isMounted) {
+          return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const stravaState = params.get('strava');
+
+        if (stravaState === 'connected' && data.athlete.stravaConnected) {
+          setSyncMessage('Strava connected successfully. Import your latest activities to populate the dashboard.');
+          window.history.replaceState({}, '', window.location.pathname);
         }
       })
       .catch((error) => {
@@ -29,6 +48,40 @@ export default function Dashboard() {
     };
   }, []);
 
+  async function handleConnectStrava() {
+    setIsConnecting(true);
+    setSyncMessage('');
+
+    try {
+      const data = await getStravaAuthUrl();
+      window.location.assign(data.url);
+    } catch (error) {
+      setErrorMessage(error.message);
+      setIsConnecting(false);
+    }
+  }
+
+  async function handleSyncStrava() {
+    setIsSyncing(true);
+    setSyncMessage('');
+    setErrorMessage('');
+
+    try {
+      const response = await syncStravaActivities();
+      await loadDashboardData();
+
+      setSyncMessage(
+        response.imported > 0
+          ? `Imported ${response.imported} Strava activit${response.imported === 1 ? 'y' : 'ies'} into the club dashboard.`
+          : 'No new Strava activities were available to import.',
+      );
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsSyncing(false);
+    }
+  }
+
   if (errorMessage) {
     return <BackendState title="Dashboard unavailable" message={errorMessage} />;
   }
@@ -39,6 +92,7 @@ export default function Dashboard() {
 
   const { achievements, activities, athlete, dashboardStats } = dashboardData;
   const recentActivities = activities.slice(0, 4);
+  const isStravaConnected = athlete.stravaConnected;
 
   return (
     <div className="page-stack">
@@ -56,10 +110,49 @@ export default function Dashboard() {
             <PlugZap aria-hidden="true" size={23} />
           </div>
           <div>
-            <span>{athlete.stravaConnected ? 'Strava Connected' : 'Connect with Strava'}</span>
-            <p>Sync-ready structure for activity imports and OAuth.</p>
+            <span>{isStravaConnected ? 'Strava Connected' : 'Connect with Strava'}</span>
+            <p>
+              {isStravaConnected
+                ? 'Your dashboard reads imported Strava activities from the backend activity store.'
+                : 'Authorize Strava first, then import your latest activities into the club dashboard.'}
+            </p>
           </div>
         </div>
+      </section>
+
+      <section className="panel connection-panel">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Strava Integration</p>
+            <h2>Connect and import activities</h2>
+          </div>
+          <div className="connection-actions">
+            {!isStravaConnected ? (
+              <button className="action-button" onClick={handleConnectStrava} type="button" disabled={isConnecting}>
+                {isConnecting ? <LoaderCircle aria-hidden="true" className="spin" size={16} /> : <PlugZap aria-hidden="true" size={16} />}
+                {isConnecting ? 'Opening Strava...' : 'Connect Strava'}
+              </button>
+            ) : (
+              <button className="action-button" onClick={handleSyncStrava} type="button" disabled={isSyncing}>
+                {isSyncing ? <LoaderCircle aria-hidden="true" className="spin" size={16} /> : <RefreshCw aria-hidden="true" size={16} />}
+                {isSyncing ? 'Syncing activities...' : 'Sync latest activities'}
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="connection-status">
+          <span className={`status-dot ${isStravaConnected ? 'is-connected' : 'is-disconnected'}`} />
+          <strong>{isStravaConnected ? 'Ready to import from Strava' : 'No Strava connection yet'}</strong>
+        </div>
+
+        <p>
+          Strava sends activity objects through the API, and this app normalizes each one into your own
+          {' '}<code>activities</code>{' '}
+          table with distance, moving time, pace, elevation, and points.
+        </p>
+
+        {syncMessage ? <div className="info-banner success-banner">{syncMessage}</div> : null}
       </section>
 
       <section className="stat-grid" aria-label="Dashboard summary">
@@ -78,9 +171,20 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="activity-list">
-            {recentActivities.map((activity) => (
-              <ActivityRow activity={activity} compact key={activity.id} />
-            ))}
+            {recentActivities.length > 0 ? (
+              recentActivities.map((activity) => (
+                <ActivityRow activity={activity} compact key={activity.id} />
+              ))
+            ) : (
+              <EmptyState
+                title={isStravaConnected ? 'No synced activities yet' : 'No Strava data yet'}
+                message={
+                  isStravaConnected
+                    ? 'Run a sync to pull your latest Strava sessions into the dashboard.'
+                    : 'Connect Strava to start displaying your running activity in the UI.'
+                }
+              />
+            )}
           </div>
         </section>
 
@@ -125,5 +229,14 @@ function BackendState({ title, message }) {
       <h2>{title}</h2>
       <p>{message}</p>
     </section>
+  );
+}
+
+function EmptyState({ title, message }) {
+  return (
+    <div className="empty-state">
+      <h3>{title}</h3>
+      <p>{message}</p>
+    </div>
   );
 }
