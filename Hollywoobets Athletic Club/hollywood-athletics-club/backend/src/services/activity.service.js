@@ -26,23 +26,33 @@ export function secondsToPace(secondsPerKm) {
 }
 
 export function normalizeStravaActivity(activity, userId) {
+  const activityName = activity.name || 'Strava Activity';
   const distanceKm = Number(((activity.distance || 0) / 1000).toFixed(2));
   const movingTime = Number(activity.moving_time || activity.elapsed_time || 0);
   const paceSecondsPerKm = distanceKm > 0 ? Number((movingTime / distanceKm).toFixed(2)) : null;
+  const startDate = activity.start_date || null;
+  const points = calculateActivityPoints(distanceKm);
 
   return {
     user_id: userId,
     strava_activity_id: activity.id,
-    name: activity.name || 'Strava Activity',
+    activity_name: activityName,
+    activity_date: startDate ? startDate.slice(0, 10) : new Date().toISOString().slice(0, 10),
+    name: activityName,
     sport_type: activity.sport_type || activity.type || 'Run',
     activity_type: activity.type || activity.sport_type || 'Run',
     distance_km: distanceKm,
+    duration: secondsToDuration(movingTime),
+    pace: secondsToPace(paceSecondsPerKm),
+    elevation_metres: Number(activity.total_elevation_gain || 0),
+    points_earned: points,
     moving_time_seconds: movingTime,
     elapsed_time_seconds: Number(activity.elapsed_time || movingTime),
     pace_seconds_per_km: paceSecondsPerKm,
     total_elevation_gain: Number(activity.total_elevation_gain || 0),
-    start_date: activity.start_date,
-    points: calculateActivityPoints(distanceKm),
+    start_date: startDate,
+    points,
+    raw_payload: activity,
   };
 }
 
@@ -96,13 +106,13 @@ function toUiActivity(row) {
 
   return {
     id: row.id || row.strava_activity_id,
-    name: row.name,
-    date: row.start_date ? formatActivityDate(row.start_date) : '',
+    name: row.name || row.activity_name || 'Activity',
+    date: row.start_date ? formatActivityDate(row.start_date) : row.activity_date ? formatActivityDate(row.activity_date) : '',
     distance,
-    duration: secondsToDuration(row.moving_time_seconds),
-    pace: secondsToPace(row.pace_seconds_per_km),
-    elevation: `${Math.round(Number(row.total_elevation_gain || 0))} m`,
-    points: row.points || calculateActivityPoints(distance),
+    duration: row.moving_time_seconds ? secondsToDuration(row.moving_time_seconds) : row.duration || secondsToDuration(0),
+    pace: row.pace_seconds_per_km ? secondsToPace(row.pace_seconds_per_km) : row.pace || '-',
+    elevation: `${Math.round(Number(row.total_elevation_gain ?? row.elevation_metres ?? 0))} m`,
+    points: row.points || row.points_earned || calculateActivityPoints(distance),
     type: row.activity_type || row.sport_type || 'Run',
   };
 }

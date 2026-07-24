@@ -124,7 +124,7 @@ export default function Performance() {
 function BackendState({ title, message }) {
   return (
     <section className="panel">
-      <p className="eyebrow">Backend</p>
+      
       <h2>{title}</h2>
       <p>{message}</p>
     </section>

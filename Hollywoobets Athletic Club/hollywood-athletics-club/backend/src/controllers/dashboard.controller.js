@@ -22,6 +22,7 @@ export async function getDashboard(req, res, next) {
       activities,
       achievements,
       dashboardStats: buildDashboardStats(activities),
+      
     });
   } catch (error) {
     next(error);
