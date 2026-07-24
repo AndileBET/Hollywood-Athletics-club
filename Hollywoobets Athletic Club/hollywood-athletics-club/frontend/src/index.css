@@ -735,7 +735,7 @@ button {
   gap: 24px;
   padding: 30px;
 }
-
+ 
 .marketplace-hero h2,
 .community-hero h2 {
   margin: 8px 0 10px;
@@ -743,13 +743,13 @@ button {
   font-size: clamp(30px, 4vw, 48px);
   line-height: 1.04;
 }
-
+ 
 .marketplace-hero p,
 .community-hero p {
   max-width: 760px;
   color: #d4cfdb;
 }
-
+ 
 .marketplace-highlight,
 .community-scorecard {
   min-height: 180px;
@@ -764,30 +764,30 @@ button {
   text-align: center;
   padding: 20px;
 }
-
+ 
 .marketplace-highlight strong,
 .community-scorecard strong {
   color: var(--text);
   font-size: 24px;
 }
-
+ 
 .marketplace-highlight span,
 .community-scorecard span {
   color: var(--muted);
   font-size: 13px;
 }
-
+ 
 .marketplace-strip,
 .community-meta-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
-
+ 
 .marketplace-strip {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-
+ 
 .marketplace-strip div,
 .community-meta-card {
   border: 1px solid var(--line);
@@ -799,28 +799,28 @@ button {
   gap: 12px;
   color: var(--gold);
 }
-
+ 
 .marketplace-strip span,
 .community-meta-card span {
   color: #d7d1de;
 }
-
+ 
 .community-meta-card {
   align-items: flex-start;
   flex-direction: column;
 }
-
+ 
 .community-meta-card strong {
   color: var(--text);
   font-size: 18px;
 }
-
+ 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
-
+ 
 .product-card,
 .community-update-card {
   overflow: hidden;
@@ -828,7 +828,7 @@ button {
   border-radius: 8px;
   background: rgba(17, 16, 20, 0.92);
 }
-
+ 
 .product-card img {
   width: 100%;
   aspect-ratio: 1 / 0.78;
@@ -836,18 +836,18 @@ button {
   display: block;
   background: #241b31;
 }
-
+ 
 .product-card-body {
   padding: 14px;
 }
-
+ 
 .product-card-body span {
   color: var(--gold);
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
 }
-
+ 
 .product-card-body h3 {
   min-height: 44px;
   margin: 7px 0 14px;
@@ -855,19 +855,19 @@ button {
   font-size: 16px;
   line-height: 1.25;
 }
-
+ 
 .product-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
-
+ 
 .product-card-footer strong {
   color: var(--gold);
   font-size: 18px;
 }
-
+ 
 .product-card-footer button {
   border: 0;
   border-radius: 8px;
@@ -877,13 +877,13 @@ button {
   font-weight: 900;
   padding: 8px 12px;
 }
-
+ 
 .community-update-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
-
+ 
 .community-update-card img {
   width: 100%;
   aspect-ratio: 1.35 / 1;
@@ -891,49 +891,49 @@ button {
   display: block;
   background: #241b31;
 }
-
+ 
 .community-update-card div {
   padding: 18px;
 }
-
+ 
 .community-update-card h3 {
   margin: 7px 0 8px;
   color: var(--text);
   font-size: 20px;
   line-height: 1.2;
 }
-
+ 
 .community-update-card p {
   color: #d4cfdb;
 }
-
+ 
 @media (max-width: 1120px) {
   .marketplace-hero,
   .community-hero {
     grid-template-columns: 1fr;
   }
-
+ 
   .product-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
+ 
   .community-update-grid,
   .community-meta-grid {
     grid-template-columns: 1fr;
   }
 }
-
+ 
 @media (max-width: 720px) {
   .marketplace-hero,
   .community-hero {
     padding: 16px;
   }
-
+ 
   .marketplace-strip,
   .product-grid {
     grid-template-columns: 1fr;
   }
-
+ 
   .marketplace-hero h2,
   .community-hero h2 {
     font-size: 30px;
