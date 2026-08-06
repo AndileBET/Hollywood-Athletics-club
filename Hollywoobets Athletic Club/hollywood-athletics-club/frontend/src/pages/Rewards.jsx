@@ -81,21 +81,21 @@ const earnedAchievements = [
     title: 'Century Club',
     description: 'Complete 100 runs',
     points: 500,
-    earned: 'Earned 2025/11/20',
+    earned: 'Earned 2026/05/20',
     icon: Trophy,
   },
   {
     title: 'Marathon Ready',
     description: 'Complete a 42km run',
     points: 1000,
-    earned: 'Earned 2025/10/15',
+    earned: 'Earned 2026/03/15',
     icon: Medal,
   },
   {
     title: 'Speed Demon',
     description: 'Run 5km under 20 minutes',
     points: 300,
-    earned: 'Earned 2025/09/08',
+    earned: 'Earned 2026/02/08',
     icon: Zap,
   },
 ];
@@ -104,8 +104,9 @@ export default function Rewards() {
   return (
     <div className="rewards-page">
       <header className="rewards-title">
-        <h2>Rewards &amp; Achievements</h2>
-        <p>Track your progress and unlock exclusive benefits</p>
+        <p className="eyebrow">Member Rewards</p>
+        <h2>Chase your <span className="headline-highlight yellow">next</span> milestone</h2>
+        <p>Track points, unlock benefits, and celebrate achievements that reward consistency, wellness, and community participation.</p>
       </header>
 
       <section className="rewards-level-card" aria-label="Current rewards level">
