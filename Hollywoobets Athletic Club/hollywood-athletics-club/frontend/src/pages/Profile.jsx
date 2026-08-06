@@ -1,87 +1,258 @@
-import { CalendarDays, IdCard, Image, Mail } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { getProfileData } from '../api/client.js';
+import {
+  CalendarDays,
+  Mail,
+  ShieldCheck,
+  Pencil,
+  Trophy,
+  Phone,
+  User,
+  Building2,
+  BadgeCheck,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { getProfileData } from "../api/client";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
 
     getProfileData()
       .then((data) => {
-        if (isMounted) {
+        if (mounted) {
           setProfileData(data);
         }
       })
-      .catch((error) => {
-        if (isMounted) {
-          setErrorMessage(error.message);
+      .catch((err) => {
+        if (mounted) {
+          setErrorMessage(err.message);
         }
       });
 
     return () => {
-      isMounted = false;
+      mounted = false;
     };
   }, []);
 
   if (errorMessage) {
-    return <BackendState title="Profile unavailable" message={errorMessage} />;
+    return (
+      <BackendState
+        title="Profile unavailable"
+        message={errorMessage}
+      />
+    );
   }
 
   if (!profileData) {
-    return <BackendState title="Loading profile" message="Loading Data...." />;
+    return (
+      <BackendState
+        title="Loading Profile"
+        message="Loading..."
+      />
+    );
   }
 
   const { athlete } = profileData;
 
   return (
-    <div className="page-stack">
-      <section className="profile-header">
-        <div className="avatar">
-          {athlete.avatarUrl ? (
-            <img alt={athlete.name} src={athlete.avatarUrl} />
-          ) : (
-            athlete.avatarInitials
-          )}
-        </div>
-        <div>
-          <p className="eyebrow">Profile</p>
-          <h2>{athlete.name}</h2>
-          <div className="profile-meta">
-            <span><Mail aria-hidden="true" size={15} />{athlete.email}</span>
-            <span><CalendarDays aria-hidden="true" size={15} />Member since {athlete.memberSince}</span>
-          </div>
-        </div>
-      </section>
+    <div className="profile-wrapper">
 
-      <section className="panel">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Database Row</p>
-            <h2>profiles</h2>
-          </div>
+      <div className="profile-card-simple">
+
+        {/* Reward Points */}
+
+        <div className="profile-points">
+
+          <span>Total Reward Points</span>
+
+          {/* Replace with backend value later */}
+          <strong>{profileData.points?.toLocaleString() ?? "169"}</strong>
+
         </div>
-        <div className="achievement-stats">
-          {/* <div>
-            <strong><IdCard aria-hidden="true" size={18} /> ID</strong>
-            <span>{athlete.id}</span>
-          </div> */}
-          <div>
-            <strong><Mail aria-hidden="true" size={18} /> Email</strong>
-            <span>{athlete.email}</span>
+
+        {/* Avatar */}
+
+        <div className="profile-top">
+
+          <div className="profile-avatar">
+
+            {athlete.avatarUrl ? (
+              <img
+                src={athlete.avatarUrl}
+                alt={athlete.name}
+              />
+            ) : (
+              athlete.avatarInitials
+            )}
+
           </div>
-          <div>
-            <strong><CalendarDays aria-hidden="true" size={18} /> Member Since</strong>
-            <span>{athlete.memberSince}</span>
-          </div>
-          <div>
-            <strong><Image aria-hidden="true" size={18} /> Avatar URL</strong>
-            <span>{athlete.avatarUrl || 'No avatar set'}</span>
-          </div>
+
+          <h1>{athlete.name}</h1>
+
+          <p className="profile-subtitle">
+            Hollywood Athletics Club
+          </p>
+
+          <span className="profile-badge">
+            Active Club Member
+          </span>
+
         </div>
-      </section>
+
+        {/* Information */}
+
+        <div className="profile-details-grid">
+
+          {/* Personal */}
+
+          <div className="profile-details-card">
+
+            <h3>Personal Information</h3>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <Mail size={18} />
+
+                <span>Email</span>
+
+              </div>
+
+              <strong>{athlete.email}</strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <Phone size={18} />
+
+                <span>Phone</span>
+
+              </div>
+
+              <strong>+27 82 000 0000</strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <User size={18} />
+
+                <span>Gender</span>
+
+              </div>
+
+              <strong>Male</strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <BadgeCheck size={18} />
+
+                <span>Emergency Contact</span>
+
+              </div>
+
+              <strong>Not Added</strong>
+
+            </div>
+
+          </div>
+
+          {/* Membership */}
+
+          <div className="profile-details-card">
+
+            <h3>Membership</h3>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <ShieldCheck size={18} />
+
+                <span>Status</span>
+
+              </div>
+
+              <strong className="verified">
+                Verified Member
+              </strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <Building2 size={18} />
+
+                <span>Club</span>
+
+              </div>
+
+              <strong>
+                Hollywood Athletics Club
+              </strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <CalendarDays size={18} />
+
+                <span>Member Since</span>
+
+              </div>
+
+              <strong>
+                {athlete.memberSince}
+              </strong>
+
+            </div>
+
+            <div className="detail-row">
+
+              <div className="detail-label">
+
+                <Trophy size={18} />
+
+                <span>Club Number</span>
+
+              </div>
+
+              <strong>HB-000245</strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Button */}
+
+        <button className="profile-edit-btn">
+
+          <Pencil size={18} />
+
+          Edit Profile
+
+        </button>
+
+      </div>
+
     </div>
   );
 }
