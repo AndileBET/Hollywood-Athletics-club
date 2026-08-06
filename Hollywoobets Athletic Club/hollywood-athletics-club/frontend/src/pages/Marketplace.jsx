@@ -69,10 +69,10 @@ export default function Marketplace() {
 <section className="marketplace-hero">
 <div>
 <p className="eyebrow">Hollywoodbets Marketplace</p>
-<h2>Club gear built for race day energy.</h2>
+<h2>Kit for your <span className="headline-highlight yellow">next</span> run.</h2>
 <p>
-            Browse running essentials, club apparel, recovery gear, and premium
-            training products selected for Hollywoodbets Athletic Club members.
+            Browse club apparel, recovery tools, and training essentials chosen
+            for members who want performance, comfort, and everyday running style.
 </p>
 </div>
  

@@ -56,8 +56,8 @@ export default function Performance() {
     <div className="page-stack">
       <section className="page-header">
         <p className="eyebrow">Performance Centre</p>
-        <h2>Training trends and activity history</h2>
-        <p>Review club-ready metrics across distance, pace, elevation, duration, and rewards points.</p>
+        <h2>Build <span className="headline-highlight yellow">momentum</span> every week</h2>
+        <p>Review your running journey across distance, pace, elevation, duration, and club reward progress in a cleaner performance view.</p>
       </section>
 
       <section className="charts-grid">
@@ -66,15 +66,15 @@ export default function Performance() {
             <AreaChart data={monthlyDistanceData} margin={chartMargin}>
               <defs>
                 <linearGradient id="distanceFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f9c80e" stopOpacity={0.45} />
-                  <stop offset="95%" stopColor="#f9c80e" stopOpacity={0.04} />
+                  <stop offset="5%" stopColor="#FFDE17" stopOpacity={0.55} />
+                  <stop offset="95%" stopColor="#FFDE17" stopOpacity={0.04} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="#302a3c" vertical={false} />
-              <XAxis dataKey="month" stroke="#a8a2b4" tickLine={false} axisLine={false} />
-              <YAxis stroke="#a8a2b4" tickLine={false} axisLine={false} />
-              <Tooltip contentStyle={{ background: '#111014', border: '1px solid #3b3348', color: '#fff' }} />
-              <Area type="monotone" dataKey="distance" stroke="#f9c80e" fill="url(#distanceFill)" strokeWidth={3} />
+              <CartesianGrid stroke="#E6DFF0" vertical={false} />
+              <XAxis dataKey="month" stroke="#5C2D91" tickLine={false} axisLine={false} />
+              <YAxis stroke="#5C2D91" tickLine={false} axisLine={false} />
+              <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E6DFF0', color: '#000000', borderRadius: '16px' }} />
+              <Area type="monotone" dataKey="distance" stroke="#5C2D91" fill="url(#distanceFill)" strokeWidth={3} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -82,11 +82,11 @@ export default function Performance() {
         <ChartCard title="Pace Trend" subtitle="Minutes per km">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={paceTrendData} margin={chartMargin}>
-              <CartesianGrid stroke="#302a3c" vertical={false} />
-              <XAxis dataKey="week" stroke="#a8a2b4" tickLine={false} axisLine={false} />
-              <YAxis stroke="#a8a2b4" tickLine={false} axisLine={false} domain={[4.8, 5.6]} />
-              <Tooltip contentStyle={{ background: '#111014', border: '1px solid #3b3348', color: '#fff' }} />
-              <Line type="monotone" dataKey="pace" stroke="#ffffff" strokeWidth={3} dot={{ fill: '#f9c80e', strokeWidth: 0 }} />
+              <CartesianGrid stroke="#E6DFF0" vertical={false} />
+              <XAxis dataKey="week" stroke="#5C2D91" tickLine={false} axisLine={false} />
+              <YAxis stroke="#5C2D91" tickLine={false} axisLine={false} domain={[4.8, 5.6]} />
+              <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E6DFF0', color: '#000000', borderRadius: '16px' }} />
+              <Line type="monotone" dataKey="pace" stroke="#5C2D91" strokeWidth={3} dot={{ fill: '#FFDE17', strokeWidth: 0 }} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -94,11 +94,11 @@ export default function Performance() {
         <ChartCard title="Activity Count" subtitle="Runs per month">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={activityCountData} margin={chartMargin}>
-              <CartesianGrid stroke="#302a3c" vertical={false} />
-              <XAxis dataKey="month" stroke="#a8a2b4" tickLine={false} axisLine={false} />
-              <YAxis stroke="#a8a2b4" tickLine={false} axisLine={false} />
-              <Tooltip contentStyle={{ background: '#111014', border: '1px solid #3b3348', color: '#fff' }} />
-              <Bar dataKey="count" fill="#7f3cff" radius={[4, 4, 0, 0]} />
+              <CartesianGrid stroke="#E6DFF0" vertical={false} />
+              <XAxis dataKey="month" stroke="#5C2D91" tickLine={false} axisLine={false} />
+              <YAxis stroke="#5C2D91" tickLine={false} axisLine={false} />
+              <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E6DFF0', color: '#000000', borderRadius: '16px' }} />
+              <Bar dataKey="count" fill="#5C2D91" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>

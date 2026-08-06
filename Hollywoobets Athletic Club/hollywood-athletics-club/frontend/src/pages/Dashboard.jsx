@@ -1,4 +1,4 @@
-import { Award, Flame, Footprints, Gauge, LoaderCircle, PlugZap, RefreshCw, Trophy } from 'lucide-react';
+import { ArrowUpRight, Award, Flame, Footprints, Gauge, LoaderCircle, PlugZap, RefreshCw, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ActivityRow from '../components/ActivityRow.jsx';
 import AchievementBadge from '../components/AchievementBadge.jsx';
@@ -106,13 +106,36 @@ export default function Dashboard() {
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">Hollywood Athletics Club</p>
-          <h2 className=''>Welcome back, {athlete.name.split(' ')[0]}</h2>
+          <h2>
+            Run with <span className="headline-highlight yellow">purpose</span>
+          </h2>
           <p>
-            Your Strava-powered club dashboard is tracking distance, pace,
-            consistency, and rewards through the backend integration.
+            Welcome back, {athlete.name.split(' ')[0]}. Your club dashboard keeps your
+            distance, rhythm, and rewards in one energetic space built around movement,
+            motivation, and community progress.
           </p>
         </div>
-        
+
+        <div className="hero-side-card">
+          <div className="hero-stat">
+            <span className="hero-stat-badge">
+              <Trophy aria-hidden="true" size={22} />
+            </span>
+            <div>
+              <strong>{dashboardStats.totalPoints.toLocaleString()} points</strong>
+              <span>earned through consistent club running</span>
+            </div>
+          </div>
+          <div className="hero-stat">
+            <span className="hero-stat-badge">
+              <ArrowUpRight aria-hidden="true" size={22} />
+            </span>
+            <div>
+              <strong>{dashboardStats.currentStreak} day streak</strong>
+              <span>keep your momentum moving this week</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="panel connection-panel">
@@ -186,7 +209,7 @@ export default function Dashboard() {
             <Award aria-hidden="true" size={24} />
           </div>
           <strong>{dashboardStats.totalPoints.toLocaleString()}</strong>
-          <p>Every kilometre earns 10 points. Keep the streak alive and unlock club achievements as the backend grows.</p>
+          <p>Every kilometre earns 10 points. Stay active, show up for the club, and turn each session into visible progress.</p>
           <div className="points-rule">
             <span>8.5 km run</span>
             <b>= 85 points</b>

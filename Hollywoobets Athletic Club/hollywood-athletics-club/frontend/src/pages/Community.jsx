@@ -24,11 +24,10 @@ export default function Community() {
 <section className="community-hero">
 <div>
 <p className="eyebrow">Hollywoodbets Community</p>
-<h2>A major event success for the club.</h2>
+<h2>One <span className="headline-highlight yellow">community</span> in motion.</h2>
 <p>
-            Hollywoodbets hosted a standout running event that brought athletes,
-            fans, and the local community together for a powerful day of sport,
-            connection, and celebration.
+            Follow the stories, race-day moments, and shared wins that make the
+            club feel inclusive, energetic, and proudly member-driven.
 </p>
 </div>
  

@@ -61,6 +61,15 @@ export default function Profile() {
 
       <div className="profile-card-simple">
 
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Runner Profile</p>
+            <h2>
+              Club <span className="headline-highlight yellow">member</span> snapshot
+            </h2>
+          </div>
+        </div>
+
         {/* Reward Points */}
 
         <div className="profile-points">

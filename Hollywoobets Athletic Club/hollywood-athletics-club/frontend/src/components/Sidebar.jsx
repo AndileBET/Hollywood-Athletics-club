@@ -29,8 +29,8 @@ export default function Sidebar({ activePage, onNavigate }) {
             /> 
           </div>
           <div>
-            <p className="eyebrow">Club Dashboard</p>
-            <h1>Hollywood Athletics</h1>
+            <p className="eyebrow">Running Together</p>
+            <h1>Hollywood Athletics Club</h1>
           </div>
         </div>
 
@@ -49,8 +49,9 @@ export default function Sidebar({ activePage, onNavigate }) {
         </nav>
 
         <div className="sidebar-footer">
-          <p className="eyebrow">Reward Rule</p>
+          <p className="eyebrow">Club Momentum</p>
           <strong>1 km = 10 points</strong>
+          <p>Move with the club, collect rewards, and keep the community energy high.</p>
         </div>
       </aside>
 
