@@ -18,6 +18,9 @@ export default function Dashboard() {
     setErrorMessage('');
 
     return data;
+
+   
+
   }
 
   useEffect(() => {
@@ -61,6 +64,8 @@ export default function Dashboard() {
     }
   }
 
+  
+
   async function handleSyncStrava() {
     setIsSyncing(true);
     setSyncMessage('');
@@ -74,7 +79,7 @@ export default function Dashboard() {
         response.imported > 0
           ? `Imported ${response.imported} Strava activit${response.imported === 1 ? 'y' : 'ies'} into the club dashboard.`
           : 'No new Strava activities were available to import.',
-          console.log(stravaActivity),
+          console.log(response),
       );
     } catch (error) {
       setErrorMessage(error.message);
@@ -94,34 +99,26 @@ export default function Dashboard() {
   const { achievements, activities, athlete, dashboardStats } = dashboardData;
   const recentActivities = activities.slice(0, 4);
   const isStravaConnected = athlete.stravaConnected;
+  const currentMonth = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric', });
 
   return (
     <div className="page-stack">
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">Hollywood Athletics Club</p>
-          <h2>Welcome back, {athlete.name.split(' ')[0]}</h2>
+          <h2 className=''>Welcome back, {athlete.name.split(' ')[0]}</h2>
           <p>
             Your Strava-powered club dashboard is tracking distance, pace,
             consistency, and rewards through the backend integration.
           </p>
         </div>
-        <div className="strava-card">
-          <div className="strava-icon">
-            <PlugZap aria-hidden="true" size={23} />
-          </div>
-          <div>
-            <span>{athlete.stravaConnected ? 'Strava Connected' : 'Connected with Strava'}</span>
-            <p>Sync-ready structure for activity imports and OAuth.</p>
-          </div>
-        </div>
+        
       </section>
 
       <section className="panel connection-panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Strava Integration</p>
-            <h2>Connect and import activities</h2>
+            <h2>My Strava</h2>
           </div>
           <div className="connection-actions">
             {!isStravaConnected ? (
@@ -140,27 +137,20 @@ export default function Dashboard() {
 
         <div className="connection-status">
           <span className={`status-dot ${isStravaConnected ? 'is-connected' : 'is-disconnected'}`} />
-          <strong>{isStravaConnected ? 'Ready to import from Strava' : 'No Strava connection yet'}</strong>
+          <strong>{isStravaConnected ? 'Active' : 'No Strava connection yet'}</strong>
         </div>
-
-        {/* <p>
-          Strava sends activity objects through the API, and this app normalizes each one into your own
-          {' '}<code>activities</code>{' '}
-          table with distance, moving time, pace, elevation, and points.
-        </p> */}
-
-        
 
         {syncMessage ? <div className="info-banner success-banner">{syncMessage}</div> : null}
       </section>
 
       <section className="stat-grid" aria-label="Dashboard summary">
         <StatCard icon={Footprints} label="Total Distance" value={dashboardStats.totalDistance} detail="All synced runs" />
-        <StatCard icon={Gauge} label="Runs This Month" value={dashboardStats.runsThisMonth} detail="March 2026" />
+        <StatCard icon={Gauge} label="Runs" value={dashboardStats.runsThisMonth} detail={currentMonth} />
         <StatCard icon={Flame} label="Current Streak" value={dashboardStats.currentStreak} detail="Active training rhythm" />
         <StatCard icon={Trophy} label="Total Points" value={dashboardStats.totalPoints.toLocaleString()} detail="1 km = 10 points" />
       </section>
 
+      
       <div className="dashboard-grid">
         <section className="panel">
           <div className="section-heading">
