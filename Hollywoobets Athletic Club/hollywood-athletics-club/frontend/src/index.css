@@ -81,7 +81,8 @@ button:hover {
 }
 
 .app-shell {
-  display: block;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
   min-height: 100vh;
   width: 100%;
   position: relative;
@@ -115,9 +116,8 @@ button:hover {
 }
 
 .sidebar {
-  position: fixed;
-  inset: 0 auto 0 0;
-  width: 300px;
+  position: sticky;
+  top: 0;
   height: 100vh;
   padding: 24px;
   background:
@@ -263,9 +263,12 @@ button:hover {
   display: none;
 }
 
+.mobile-topbar {
+  display: none;
+}
+
 .main-panel {
   min-width: 0;
-  margin-left: 300px;
   padding: 28px;
 }
 
@@ -1287,45 +1290,102 @@ button:hover {
 
 @media (max-width: 1120px) {
   .app-shell {
-    display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .app-shell::before {
+    width: 20rem;
+    height: 20rem;
+    top: -7rem;
+    right: -9rem;
+  }
+
+  .app-shell::after {
+    width: 22rem;
+    height: 22rem;
+    left: -11rem;
+    bottom: -10rem;
   }
 
   .sidebar {
     display: none;
   }
 
+  .mobile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 12;
+    display: block;
+    padding: 10px 12px 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82) 70%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  }
+
+  .mobile-brand-mark {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 auto;
+    border-radius: 16px;
+  }
+
+  .mobile-brand strong {
+    display: block;
+    font-size: 0.96rem;
+    line-height: 1.15;
+  }
+
   .main-panel {
-    margin-left: 0;
-    padding: 18px 18px 96px;
+    padding: 14px 14px 110px;
   }
 
   .mobile-nav {
     position: fixed;
     z-index: 10;
     left: 50%;
-    bottom: 14px;
+    bottom: max(12px, env(safe-area-inset-bottom));
     transform: translateX(-50%);
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 8px;
-    width: min(94vw, 640px);
-    padding: 10px;
+    gap: 6px;
+    width: min(96vw, 720px);
+    padding: 8px;
     border: 1px solid var(--line-strong);
-    border-radius: 24px 24px 18px 18px;
+    border-radius: 24px;
     background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
     backdrop-filter: blur(14px);
   }
 
   .mobile-nav-button {
     width: 100%;
-    height: 48px;
-    display: grid;
+    min-height: 62px;
+    display: flex;
+    flex-direction: column;
     place-items: center;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 4px;
     border-radius: 16px;
     background: transparent;
     color: var(--text-muted);
+  }
+
+  .mobile-nav-button span {
+    font-size: 0.64rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
   }
 
   .dashboard-hero,
@@ -1354,7 +1414,7 @@ button:hover {
 
 @media (max-width: 720px) {
   .main-panel {
-    padding: 12px 12px 92px;
+    padding: 12px 12px 126px;
   }
 
   .dashboard-hero,
@@ -1379,8 +1439,87 @@ button:hover {
   .marketplace-hero h2,
   .community-hero h2,
   .rewards-title h2,
-  .brand-panel h2 {
-    font-size: clamp(2.1rem, 8vw, 3rem);
+  .brand-panel h4 {
+    max-width: none;
+    font-size: clamp(1rem, 10vw, 1.8rem);
+    line-height: 0.95;
+  }
+
+  .dashboard-hero,
+  .marketplace-hero,
+  .community-hero {
+    gap: 18px;
+  }
+
+  .dashboard-hero::before,
+  .page-header::before,
+  .marketplace-hero::before,
+  .community-hero::before,
+  .rewards-title::before,
+  .brand-panel::before {
+    left: -78px;
+    bottom: -86px;
+    width: 250px;
+    height: 150px;
+    border-width: 12px;
+  }
+
+  .dashboard-hero::after,
+  .page-header::after,
+  .marketplace-hero::after,
+  .community-hero::after,
+  .rewards-title::after,
+  .brand-panel::after {
+    top: -80px;
+    right: -60px;
+    width: 170px;
+    height: 170px;
+  }
+
+  .hero-side-card,
+  .marketplace-highlight,
+  .community-scorecard,
+  .strava-card {
+    min-height: 0;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .hero-side-card strong,
+  .marketplace-highlight strong,
+  .community-scorecard strong {
+    font-size: 1.55rem;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 14px;
+  }
+
+  .section-heading h2,
+  .chart-card h2,
+  .panel h2,
+  .rewards-panel h3,
+  .profile-details-card h3 {
+    font-size: 1.35rem;
+  }
+
+  .stat-card {
+    min-height: 0;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .stat-card strong {
+    font-size: 1.9rem;
+  }
+
+  .activity-main h3,
+  .product-card-body h3,
+  .community-update-card h3 {
+    font-size: 1rem;
   }
 
   .achievement-grid,
@@ -1394,14 +1533,32 @@ button:hover {
     grid-template-columns: 1fr;
   }
 
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
   .activity-row,
   .full-log .activity-row {
     grid-template-columns: 1fr;
     align-items: start;
+    gap: 12px;
   }
 
   .activity-metrics {
     justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .activity-metrics span,
+  .activity-metrics strong,
+  .rewards-points-badge,
+  .tier-card-heading span,
+  .achievement-card-bottom span,
+  .earned-card div > span,
+  .preview-pill,
+  .profile-badge {
+    white-space: normal;
   }
 
   .profile-top,
@@ -1421,6 +1578,22 @@ button:hover {
 
   .mobile-nav {
     width: calc(100% - 20px);
+  }
+
+  .chart-card {
+    min-height: 280px;
+  }
+
+  .chart-area {
+    height: 208px;
+  }
+
+  .product-card img {
+    aspect-ratio: 1 / 0.72;
+  }
+
+  .community-update-card img {
+    aspect-ratio: 1.25 / 1;
   }
 
   .earned-card {
@@ -1447,7 +1620,23 @@ button:hover {
 
 @media (max-width: 480px) {
   .main-panel {
-    padding: 10px 10px 88px;
+    padding: 10px 10px 132px;
+  }
+
+  .mobile-topbar {
+    padding: 8px 10px 0;
+  }
+
+  .mobile-brand {
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 18px;
+  }
+
+  .mobile-brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
   }
 
   .dashboard-hero,
@@ -1474,4 +1663,348 @@ button:hover {
     width: 104px;
     height: 104px;
   }
+
+  .mobile-nav {
+    width: calc(100% - 12px);
+    left: 6px;
+    right: 6px;
+    transform: none;
+    bottom: 8px;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 20px;
+  }
+
+  .mobile-nav-button {
+    min-height: 52px;
+    gap: 0;
+    padding: 6px 2px;
+    border-radius: 14px;
+  }
+
+  .mobile-nav-button span {
+    display: none;
+  }
+
+  .mobile-nav-button.is-active {
+    box-shadow: 0 10px 18px rgba(255, 222, 23, 0.2);
+  }
+
+  .dashboard-hero h2,
+  .page-header h2,
+  .profile-header h2,
+  .coming-soon h2,
+  .marketplace-hero h2,
+  .community-hero h2,
+  .rewards-title h2,
+  .brand-panel h2 {
+    font-size: clamp(1.8rem, 10vw, 2.3rem);
+  }
+
+  .hero-stat {
+    align-items: flex-start;
+  }
+
+  .hero-stat-badge,
+  .stat-icon,
+  .badge-icon,
+  .achievement-icon,
+  .strava-icon,
+  .activity-type,
+  .rewards-star {
+    width: 42px;
+    height: 42px;
+  }
+
+  .points-panel > strong,
+  .profile-points strong,
+  .achievement-stats strong {
+    font-size: 2.2rem;
+  }
+
+  .stat-card p,
+  .stat-card span {
+    font-size: 0.82rem;
+  }
+
+  .product-card-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .product-card-footer button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .main-panel {
+    padding: 8px 8px 124px;
+  }
+
+  .mobile-topbar {
+    padding: 6px 8px 0;
+  }
+
+  .mobile-brand {
+    padding: 9px 10px;
+  }
+
+  .mobile-nav {
+    width: calc(100% - 8px);
+    left: 4px;
+    right: 4px;
+    bottom: 6px;
+    padding: 5px;
+    gap: 1px;
+  }
+
+  .mobile-nav-button {
+    min-height: 48px;
+    padding: 4px 1px;
+  }
+
+  .dashboard-hero,
+  .page-header,
+  .panel,
+  .chart-card,
+  .marketplace-hero,
+  .community-hero,
+  .rewards-title,
+  .rewards-level-card,
+  .rewards-panel,
+  .achievement-badge,
+  .activity-row,
+  .tier-card,
+  .achievement-progress-card,
+  .earned-card,
+  .profile-card-simple,
+  .profile-details-card {
+    padding: 14px;
+  }
+
+  .chart-card {
+    min-height: 260px;
+  }
+
+  .chart-area {
+    height: 190px;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat-card {
+    gap: 10px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-card strong {
+    font-size: 1.65rem;
+  }
+
+  .stat-card p,
+  .stat-card span {
+    font-size: 0.76rem;
+  }
+  }
+
+/* Mobile responsive refinement: desktop rules above remain unchanged. */
+@media (max-width: 720px) {
+  :root { font-size: 14px; }
+
+  .page-stack,
+  .rewards-page,
+  .content-frame { gap: 14px; }
+
+  .dashboard-hero,
+  .page-header,
+  .profile-header,
+  .panel,
+  .chart-card,
+  .marketplace-hero,
+  .community-hero,
+  .rewards-title,
+  .rewards-level-card,
+  .rewards-panel,
+  .profile-card-simple,
+  .profile-details-card { padding: 14px; }
+
+  .dashboard-hero h2,
+  .page-header h2,
+  .profile-header h2,
+  .coming-soon h2,
+  .marketplace-hero h2,
+  .community-hero h2,
+  .rewards-title h2,
+  .brand-panel h4 {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+    line-height: 1;
+  }
+
+  .dashboard-hero p,
+  .page-header p,
+  .marketplace-hero p,
+  .community-hero p,
+  .rewards-title p,
+  .panel p { font-size: .82rem; }
+
+  .section-heading h2,
+  .chart-card h2,
+  .panel h2,
+  .rewards-panel h3,
+  .profile-details-card h3 { font-size: 1.08rem; }
+
+  .eyebrow { font-size: .62rem; }
+
+  /* Keep mobile content spatial: cards form compact grids instead of one long stack. */
+  .achievement-grid,
+  .product-grid,
+  .tier-grid,
+  .achievement-progress-grid,
+  .earned-grid,
+  .benefits-grid,
+  .profile-details-grid,
+  .community-update-grid,
+  .community-meta-grid,
+  .marketplace-strip,
+  .charts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat-grid,
+  .profile-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+  .stat-card { padding: 12px; gap: 8px; border-radius: 16px; }
+  .stat-card strong { font-size: 1.45rem; }
+  .stat-card p, .stat-card span { font-size: .7rem; }
+  .stat-icon { width: 36px; height: 36px; border-radius: 12px; }
+
+  .achievement-badge,
+  .tier-card,
+  .achievement-progress-card,
+  .earned-card,
+  .community-meta-card,
+  .marketplace-strip div { padding: 12px; }
+
+  .achievement-badge h3,
+  .tier-card h4,
+  .achievement-progress-card h4,
+  .earned-card h4,
+  .community-meta-card strong { font-size: .86rem; }
+
+  .achievement-badge p,
+  .tier-card p,
+  .tier-card li,
+  .achievement-progress-card p,
+  .earned-card p,
+  .community-meta-card span,
+  .marketplace-strip span { font-size: .68rem; }
+
+  .product-card-body { padding: 10px; }
+  .product-card-body h3,
+  .community-update-card h3 { font-size: .82rem; }
+  .product-card-body p,
+  .community-update-card p { font-size: .68rem; }
+
+  /* Performance remains a grid on phones; charts are shortened and labels reduced. */
+  .chart-card { min-height: 218px; padding: 12px; }
+  .chart-area { height: 158px; }
+  .chart-card .recharts-text { font-size: 9px; }
+
+  /* Activity information stays side-by-side where possible instead of collapsing vertically. */
+  .activity-row,
+  .full-log .activity-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 11px;
+  }
+  .activity-main { gap: 8px; }
+  .activity-type { width: 34px; height: 34px; border-radius: 11px; }
+  .activity-main h3 { font-size: .82rem; }
+  .activity-main p { font-size: .66rem; }
+  .activity-metrics { display: grid; grid-template-columns: repeat(2, max-content); gap: 5px; }
+  .activity-metrics span,
+  .activity-metrics strong { min-height: 26px; padding: 4px 7px; font-size: .62rem; }
+
+  .profile-details-grid .detail-row { gap: 6px; }
+  .detail-label span, .detail-row strong { font-size: .7rem; }
+}
+
+@media (min-width: 540px) and (max-width: 720px) {
+  .product-grid,
+  .tier-grid,
+  .achievement-grid,
+  .achievement-progress-grid,
+  .earned-grid,
+  .community-update-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  :root { font-size: 13px; }
+  .main-panel { padding: 8px 8px 116px; }
+  .mobile-brand strong { font-size: .82rem; }
+  .mobile-brand .eyebrow { font-size: .55rem; }
+  .mobile-brand-mark { width: 38px; height: 38px; }
+
+  .dashboard-hero,
+  .page-header,
+  .profile-header,
+  .panel,
+  .chart-card,
+  .marketplace-hero,
+  .community-hero,
+  .rewards-title,
+  .rewards-level-card,
+  .rewards-panel,
+  .achievement-badge,
+  .activity-row,
+  .tier-card,
+  .achievement-progress-card,
+  .earned-card,
+  .profile-card-simple,
+  .profile-details-card { padding: 11px; }
+
+  .charts-grid { gap: 8px; }
+  .chart-card { min-height: 190px; }
+  .chart-area { height: 135px; }
+  .chart-card .recharts-text { font-size: 8px; }
+
+  .hero-side-card { padding: 12px; }
+  .hero-stat { gap: 8px; }
+  .hero-stat strong { font-size: 1rem; }
+  .hero-stat span { font-size: .66rem; }
+  .hero-stat-badge { width: 34px; height: 34px; }
+
+  .activity-row,
+  .full-log .activity-row { padding: 9px; }
+  .activity-metrics { grid-template-columns: max-content; }
+}
+
+@media (max-width: 360px) {
+  :root { font-size: 12px; }
+  .stat-grid,
+  .profile-stats,
+  .achievement-grid,
+  .product-grid,
+  .tier-grid,
+  .achievement-progress-grid,
+  .earned-grid,
+  .benefits-grid,
+  .profile-details-grid,
+  .community-update-grid,
+  .community-meta-grid,
+  .marketplace-strip,
+  .charts-grid { gap: 6px; }
+  .chart-card { min-height: 176px; }
+  .chart-area { height: 122px; }
 }
