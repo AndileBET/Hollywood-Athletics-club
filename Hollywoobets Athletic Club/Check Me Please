@@ -1,0 +1,13 @@
+Install dependencies: npm install
+to run (go to front-end folder and run): npm.cmd run dev
+
+Supabase
+Project URL: https://csdvpvnmvxuuzfacwqqy.supabase.co
+Publishable Key: sb_publishable_eFFLj-fFcV7p2BiePrEmgw_oKl1aewj
+
+Strava
+Client ID: 266959
+Client Secret: 4917fe8acc949b67c098beff8e18f79436b7ad8d
+Your Access Token: e43e34d7d07b2081932c46645e8fe7d2662d1725
+Your Refresh Token: 8e36f58bf69c364a5a366ffc1e184ed050ab231d
+
