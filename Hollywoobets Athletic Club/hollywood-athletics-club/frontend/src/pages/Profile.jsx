@@ -216,6 +216,22 @@ export default function Profile() {
 
             </div>
 
+             <div className="detail-row">
+
+              <div className="detail-label">
+
+                <BadgeCheck size={18} />
+
+                <span>Region</span>
+
+              </div>
+
+              <strong>Kwa-Zulu Natal</strong>
+
+            </div>
+
+          
+
             <div className="detail-row">
 
               <div className="detail-label">
@@ -231,6 +247,7 @@ export default function Profile() {
               </strong>
 
             </div>
+            
 
             <div className="detail-row">
 

@@ -117,7 +117,7 @@ export default function Rewards() {
             </span>
             <h3>Ambassador Level: Silver</h3>
           </div>
-          <span className="rewards-points-badge">2450 Points</span>
+          <span className="rewards-points-badge">169 Points</span>
         </div>
 
         <div className="benefits-block">

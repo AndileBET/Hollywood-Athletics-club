@@ -2,58 +2,58 @@ import { ShoppingBag, Star, Truck } from 'lucide-react';
  
 const products = [
   {
-    name: 'Elite Running Shoes',
-    category: 'Footwear',
-    price: 'R1,899',
-    image: '/images/marketplace/running-shoes.jpg',
+    name: 'Hollywood Athletics club comrades marathon ZIP Pullover 2026',
+    category: 'pULLOVER',
+    price: 'R425',
+    image: '/images/marketplace/Hollywood_Zipper.jpg',
   },
   {
-    name: 'Hollywoodbets Club Vest',
-    category: 'Apparel',
+    name: 'Hollywoodbets Hoodie UNISEX',
+    category: 'Hoodie',
     price: 'R499',
-    image: '/images/marketplace/club-vest.jpg',
+    image: '/images/marketplace/hoodie.jpg',
   },
   {
-    name: 'Compression Running Socks',
-    category: 'Recovery',
-    price: 'R179',
-    image: '/images/marketplace/compression-socks.jpg',
+    name: '1/4 ZIP Pullover (UNISEX)',
+    category: 'Pullover',
+    price: 'R350',
+    image: '/images/marketplace/pullover.jpg',
   },
   {
-    name: 'Performance Running Cap',
-    category: 'Accessories',
-    price: 'R249',
-    image: '/images/marketplace/running-cap.jpg',
+    name: 'Tracksuit (UNISEX)',
+    category: 'Tracksuit',
+    price: 'R700',
+    image: '/images/marketplace/tracksuit.jpg',
   },
   {
-    name: 'Hydration Race Belt',
+    name: 'Shorts Black(UNISEX)',
     category: 'Training',
-    price: 'R399',
-    image: '/images/marketplace/hydration-belt.jpg',
+    price: 'R200',
+    image: '/images/marketplace/shorts.jpg',
   },
   {
-    name: 'Lightweight Training Shorts',
+    name: 'Soft Peak Cap',
     category: 'Apparel',
-    price: 'R549',
-    image: '/images/marketplace/training-shorts.jpg',
+    price: 'R300',
+    image: '/images/marketplace/Soft_peak_cap.jpg',
   },
   {
-    name: 'Sports Travel Bag',
+    name: 'Race Socks',
     category: 'Gear',
-    price: 'R799',
-    image: '/images/marketplace/sports-bag.jpg',
+    price: 'R100',
+    image: '/images/marketplace/Race_socks.jpg',
   },
   {
-    name: 'GPS Running Watch',
+    name: 'Bucket Hat',
     category: 'Tech',
-    price: 'R2,499',
-    image: '/images/marketplace/running-watch.jpg',
+    price: 'R100',
+    image: '/images/marketplace/bucket_hat.jpg',
   },
   {
-    name: 'Recovery Foam Roller',
+    name: 'Beanie',
     category: 'Recovery',
-    price: 'R299',
-    image: '/images/marketplace/recovery-roller.jpg',
+    price: 'R100',
+    image: '/images/marketplace/Beanie.jpg',
   },
   {
     name: 'Race Day Training Tee',
@@ -85,11 +85,11 @@ export default function Marketplace() {
  
       <section className="marketplace-strip">
 <div>
-<Star aria-hidden="true" size={20} />
+<Star aria-hidden="true" size={40} />
 <span>Premium club selection</span>
 </div>
 <div>
-<Truck aria-hidden="true" size={20} />
+<Truck aria-hidden="true" size={40} />
 <span>Delivery-ready product range</span>
 </div>
 </section>
