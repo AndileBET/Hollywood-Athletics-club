@@ -2,6 +2,7 @@ import {
   Award,
   BarChart3,
   Home,
+  Medal,
   ShoppingBag,
   UserRound,
   UsersRound,
@@ -12,6 +13,7 @@ const navItems = [
   { label: 'Performance', icon: BarChart3 },
   { label: 'Rewards', icon: Award },
   { label: 'Community', icon: UsersRound },
+  { label: 'Leaderboard', icon: Medal },
   { label: 'Marketplace', icon: ShoppingBag },
   { label: 'Profile', icon: UserRound },
 ];
@@ -28,6 +30,7 @@ export default function Sidebar({ activePage, onNavigate }) {
               className="brand-logo"
             />
           </div>
+
           <div>
             <p className="eyebrow">Running Together</p>
             <strong>Hollywood Athletics Club</strong>
@@ -42,18 +45,24 @@ export default function Sidebar({ activePage, onNavigate }) {
               src="/images/branding/hollywoodbets-logo.png"
               alt="Hollywoodbets logo"
               className="brand-logo"
-            /> 
+            />
           </div>
+
           <div>
             <p className="eyebrow">Running Together</p>
             <h1>Hollywood Athletics Club</h1>
           </div>
         </div>
 
-        <nav className="sidebar-nav" aria-label="Primary navigation">
+        <nav
+          className="sidebar-nav"
+          aria-label="Primary navigation"
+        >
           {navItems.map(({ label, icon: Icon }) => (
             <button
-              className={`nav-button ${activePage === label ? 'is-active' : ''}`}
+              className={`nav-button ${
+                activePage === label ? 'is-active' : ''
+              }`}
               key={label}
               onClick={() => onNavigate(label)}
               type="button"
@@ -67,14 +76,22 @@ export default function Sidebar({ activePage, onNavigate }) {
         <div className="sidebar-footer">
           <p className="eyebrow">Club Momentum</p>
           <strong>1 km = 10 points</strong>
-          <p>Move with the club, collect rewards, and keep the community energy high.</p>
+          <p>
+            Move with the club, collect rewards, and keep the
+            community energy high.
+          </p>
         </div>
       </aside>
 
-      <nav className="mobile-nav" aria-label="Mobile navigation">
+      <nav
+        className="mobile-nav"
+        aria-label="Mobile navigation"
+      >
         {navItems.map(({ label, icon: Icon }) => (
           <button
-            className={`mobile-nav-button ${activePage === label ? 'is-active' : ''}`}
+            className={`mobile-nav-button ${
+              activePage === label ? 'is-active' : ''
+            }`}
             key={label}
             onClick={() => onNavigate(label)}
             type="button"

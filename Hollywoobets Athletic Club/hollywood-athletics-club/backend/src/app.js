@@ -7,7 +7,7 @@ import performanceRoutes from './routes/performance.routes.js';
 import profileRoutes from './routes/profile.routes.js';
 import stravaRoutes from './routes/strava.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
-
+import { requireAuth } from "./middleware/auth.middleware.js";
 const app = express();
 const allowedOrigins = new Set([
   env.clientUrl,
@@ -37,10 +37,29 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/performance', performanceRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/strava', stravaRoutes);
+app.use(
+  "/api/dashboard",
+  requireAuth,
+  dashboardRoutes
+);
+
+app.use(
+  "/api/performance",
+  requireAuth,
+  performanceRoutes
+);
+
+app.use(
+  "/api/profile",
+  requireAuth,
+  profileRoutes
+);
+
+app.use(
+  "/api/strava",
+  requireAuth,
+  stravaRoutes
+);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

@@ -7,11 +7,11 @@ import {
 
 export function getStravaAuthUrl(req, res, next) {
   try {
-    const userId = req.query.userId || env.defaultUserId;
+    const userId = req.userId;
 
     if (!userId) {
-      res.status(400).json({
-        error: 'Provide userId as a query parameter or set DEFAULT_USER_ID in .env.',
+      res.status(401).json({
+        error: 'You must be logged in before connecting Strava.',
       });
       return;
     }
@@ -23,7 +23,6 @@ export function getStravaAuthUrl(req, res, next) {
     next(error);
   }
 }
-
 export async function handleStravaCallback(req, res, next) {
   try {
     const { code, state: userId } = req.query;
