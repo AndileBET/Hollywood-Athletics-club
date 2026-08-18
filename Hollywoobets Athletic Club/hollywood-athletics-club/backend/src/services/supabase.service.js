@@ -49,13 +49,26 @@ export function getDefaultUserId(req) {
 }
 
 export async function resolveUserId(req) {
+  // 1. Always prefer the authenticated Hollywood Athletics user.
+  // req.userId is set by auth.middleware.js after validating
+  // the user's Supabase access token.
+  if (req.userId) {
+    return req.userId;
+  }
+
+  // 2. Temporary development fallback.
+  // This keeps your existing DEFAULT_USER_ID setup working
+  // while you transition to proper authentication.
   const explicitUserId = getDefaultUserId(req);
 
   if (explicitUserId) {
     return explicitUserId;
   }
 
+  // 3. Final development fallback:
+  // use the first profile in Supabase.
   const supabase = requireSupabase();
+
   const { data, error } = await supabase
     .from('profiles')
     .select('id')
@@ -68,8 +81,12 @@ export async function resolveUserId(req) {
   }
 
   if (!data?.id) {
-    const missingProfileError = new Error('No profile row found in Supabase. Add one profile to public.profiles, or set DEFAULT_USER_ID in backend/.env.');
+    const missingProfileError = new Error(
+      'No authenticated user or profile could be resolved.'
+    );
+
     missingProfileError.statusCode = 404;
+
     throw missingProfileError;
   }
 

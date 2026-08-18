@@ -4,7 +4,7 @@ import { requireSupabase, requireUserId } from './supabase.service.js';
 
 const STRAVA_API_BASE_URL = 'https://www.strava.com/api/v3';
 const STRAVA_OAUTH_BASE_URL = 'https://www.strava.com/oauth';
-const REFRESH_WINDOW_SECONDS = 300;
+const REFRESH_WINDOW_SECONDS = 3600;
 
 export function getStravaAuthorizationUrl(state = '') {
   requireStravaConfig();
@@ -76,14 +76,29 @@ export async function saveStravaTokens(userId, tokenPayload) {
 
   const { data, error } = await supabase
     .from('strava_connections')
-    .upsert({
-      user_id: userId,
-      strava_athlete_id: tokenPayload.athlete?.id,
-      strava_access_token: tokenPayload.access_token,
-      strava_refresh_token: tokenPayload.refresh_token,
-      strava_token_expires_at: new Date(tokenPayload.expires_at * 1000).toISOString(),
-      updated_at: new Date().toISOString(),
-    })
+  .upsert({
+  user_id: userId,
+
+  strava_athlete_id:
+    tokenPayload.athlete?.id,
+
+  strava_access_token:
+    tokenPayload.access_token,
+
+  strava_refresh_token:
+    tokenPayload.refresh_token,
+
+  strava_token_expires_at:
+    new Date(
+      tokenPayload.expires_at * 1000
+    ).toISOString(),
+
+  strava_scope:
+    tokenPayload.scope || null,
+
+  updated_at:
+    new Date().toISOString(),
+})
     .select('*')
     .single();
 

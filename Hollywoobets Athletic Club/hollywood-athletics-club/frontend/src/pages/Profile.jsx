@@ -8,13 +8,28 @@ import {
   User,
   Building2,
   BadgeCheck,
+  LogOut,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getProfileData } from "../api/client";
+import { supabase } from "../api/supabase.js";
 
 export default function Profile() {
   const [profileData, setProfileData] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSignOut() {
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error("Sign out failed:", error);
+    setErrorMessage(error.message);
+  }
+}
 
   useEffect(() => {
     let mounted = true;
@@ -269,13 +284,24 @@ export default function Profile() {
 
         {/* Button */}
 
-        <button className="profile-edit-btn">
+      <div className="profile-actions">
+  <button
+    type="button"
+    className="profile-edit-btn"
+  >
+    <Pencil size={18} />
+    Edit Profile
+  </button>
 
-          <Pencil size={18} />
-
-          Edit Profile
-
-        </button>
+  <button
+    type="button"
+    className="profile-signout-btn"
+    onClick={handleSignOut}
+  >
+    <LogOut size={18} />
+    Sign Out
+  </button>
+</div>
 
       </div>
 
