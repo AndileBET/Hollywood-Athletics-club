@@ -150,19 +150,15 @@ http://localhost:5173
 
 ### Terminal 1 — Frontend
 
-```bash
-cd "C:\Users\AndileMN\Downloads\Hollywood-Athletics-club\Hollywoobets Athletic Club\hollywood-athletics-club\frontend"
+cd "C:\Users\AndileMN\Documents\GitHub\Hollywood-Athletics-club\Hollywoobets Athletic Club\hollywood-athletics-club\frontend"
 npm install
 npm run dev
-```
 
 ### Terminal 2 — Backend
 
-```bash
-cd "C:\Users\AndileMN\Downloads\Hollywood-Athletics-club\Hollywoobets Athletic Club\hollywood-athletics-club\backend"
+cd "C:\Users\AndileMN\Documents\GitHub\Hollywood-Athletics-club\Hollywoobets Athletic Club\hollywood-athletics-club\backend"
 npm install
 npm run dev
-```
 
 Then open:
 
