@@ -30,6 +30,12 @@ export async function requireAuth(req, res, next) {
     req.user = user;
     req.userId = user.id;
 
+    console.log('AUTH DEBUG:', {
+  userId: req.userId,
+  email: user.email,
+  path: req.originalUrl,
+});
+
     next();
   } catch (error) {
     next(error);

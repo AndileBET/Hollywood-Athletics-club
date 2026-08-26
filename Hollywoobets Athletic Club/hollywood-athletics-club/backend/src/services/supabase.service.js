@@ -95,16 +95,40 @@ export async function resolveUserId(req) {
 
 export async function getAthleteProfile(userId) {
   const supabase = requireSupabase();
+
   requireUserId(userId);
+
+  console.log('PROFILE LOOKUP DEBUG:', {
+    userId,
+  });
 
   const { data, error } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', userId)
-    .single();
+    .maybeSingle();
+
+  console.log('PROFILE QUERY RESULT:', {
+    requestedUserId: userId,
+    found: Boolean(data),
+    profileId: data?.id || null,
+    profileEmail: data?.email || null,
+    error: error?.message || null,
+    errorCode: error?.code || null,
+  });
 
   if (error) {
     throw error;
+  }
+
+  if (!data) {
+    const profileError = new Error(
+      `No Hollywood Athletics profile exists for authenticated user ${userId}.`,
+    );
+
+    profileError.statusCode = 404;
+
+    throw profileError;
   }
 
   return toUiAthlete(data);
