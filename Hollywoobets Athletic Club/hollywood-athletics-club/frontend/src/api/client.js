@@ -71,6 +71,13 @@ export async function getEndpoint(
 export const getDashboardData = () => getEndpoint('dashboard');
 export const getPerformanceData = () => getEndpoint('performance');
 export const getProfileData = () => getEndpoint('profile');
+export const getRewardsData = () => getEndpoint('rewards');
+export const getLeaderboardData = () => getEndpoint('leaderboard');
+export const updateProfile = (profile) =>
+  getEndpoint('profile', {
+    method: 'PATCH',
+    body: JSON.stringify(profile),
+  });
 
 export const syncStravaActivities = () =>
   getEndpoint('stravaSync', {
