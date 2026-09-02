@@ -151,6 +151,44 @@ export async function upsertAthleteProfile(profile) {
   return toUiAthlete(data);
 }
 
+export async function updateAthleteProfile(userId, updates) {
+  const supabase = requireSupabase();
+  requireUserId(userId);
+
+  const allowedUpdates = {
+    ...(updates.email !== undefined ? { email: String(updates.email).trim() } : {}),
+    ...(updates.phone !== undefined ? { phone: cleanOptional(updates.phone) } : {}),
+    ...(updates.gender !== undefined ? { gender: cleanOptional(updates.gender) } : {}),
+    ...(updates.emergencyContact !== undefined
+      ? { emergency_contact: cleanOptional(updates.emergencyContact) }
+      : {}),
+  };
+
+  if (allowedUpdates.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(allowedUpdates.email)) {
+    const error = new Error('Enter a valid email address.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update(allowedUpdates)
+    .eq('id', userId)
+    .select('*')
+    .single();
+
+  if (error) throw error;
+
+  if (allowedUpdates.email) {
+    const { error: authError } = await supabase.auth.admin.updateUserById(userId, {
+      email: allowedUpdates.email,
+    });
+    if (authError) throw authError;
+  }
+
+  return toUiAthlete(data);
+}
+
 export async function findUserByStravaAthleteId(stravaAthleteId) {
   if (!stravaAthleteId) {
     return null;
@@ -171,6 +209,10 @@ function toUiAthlete(row) {
     stravaConnected: false,
     avatarInitials: initialsFromName(row.full_name),
     avatarUrl: row.avatar_url || '',
+    phone: row.phone || '',
+    gender: row.gender || '',
+    emergencyContact: row.emergency_contact || '',
+    clubNumber: row.member_number || '',
   };
 }
 
@@ -181,7 +223,15 @@ function toProfileRow(profile) {
     email: profile.email,
     avatar_url: profile.avatar_url || profile.avatarUrl || null,
     member_since: profile.member_since || profile.memberSince || new Date().toISOString().slice(0, 10),
+    phone: cleanOptional(profile.phone),
+    gender: cleanOptional(profile.gender),
+    emergency_contact: cleanOptional(profile.emergency_contact || profile.emergencyContact),
   };
+}
+
+function cleanOptional(value) {
+  const cleaned = String(value || '').trim();
+  return cleaned || null;
 }
 
 function initialsFromName(name = '') {

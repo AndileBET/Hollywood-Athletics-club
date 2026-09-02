@@ -1,16 +1,22 @@
 import {
   getAthleteProfile,
   resolveUserId,
-  upsertAthleteProfile,
+  updateAthleteProfile,
 } from '../services/supabase.service.js';
+import { listActivities } from '../services/activity.service.js';
+import { calculateTotalPoints } from '../services/points.service.js';
 
 export async function getProfile(req, res, next) {
   try {
     const userId = await resolveUserId(req);
-    const athlete = await getAthleteProfile(userId);
+    const [athlete, activities] = await Promise.all([
+      getAthleteProfile(userId),
+      listActivities(userId),
+    ]);
 
     res.json({
       athlete,
+      points: calculateTotalPoints(activities),
     });
   } catch (error) {
     console.error('Profile endpoint failed', {
@@ -29,13 +35,12 @@ export async function getProfile(req, res, next) {
 export async function saveProfile(req, res, next) {
   try {
     const userId = await resolveUserId(req);
-    const profile = await upsertAthleteProfile({
-      ...req.body,
-      id: req.body.id || userId,
-    });
+    const profile = await updateAthleteProfile(userId, req.body);
+    const activities = await listActivities(userId);
 
     res.json({
       athlete: profile,
+      points: calculateTotalPoints(activities),
     });
   } catch (error) {
     console.error('Profile save failed', {

@@ -114,6 +114,8 @@ function toUiActivity(row) {
     elevation: `${Math.round(Number(row.total_elevation_gain ?? row.elevation_metres ?? 0))} m`,
     points: row.points || row.points_earned || calculateActivityPoints(distance),
     type: row.activity_type || row.sport_type || 'Run',
+    startDate: row.start_date || row.activity_date || null,
+    startDateLocal: row.raw_payload?.start_date_local || row.start_date || row.activity_date || null,
   };
 }
 

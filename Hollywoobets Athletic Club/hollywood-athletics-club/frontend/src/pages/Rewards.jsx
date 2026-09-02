@@ -10,6 +10,8 @@ import {
   Trophy,
   Zap,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getRewardsData } from '../api/client.js';
 
 const currentBenefits = [
   '10% discount on merchandise',
@@ -21,26 +23,25 @@ const currentBenefits = [
 const tiers = [
   {
     name: 'Bronze',
-    range: '0 - 999 points',
+    range: '0 - 200 points',
     tone: 'bronze',
     benefits: ['5% discount on merchandise', 'Access to community forum', 'Monthly newsletter'],
   },
   {
     name: 'Silver',
-    range: '1000 - 2499 points',
+    range: '200 - 400 points',
     tone: 'silver',
-    active: true,
     benefits: ['10% discount on merchandise', 'Priority event registration', 'Quarterly training plans', '+1 more...'],
   },
   {
     name: 'Gold',
-    range: '2500 - 4999 points',
+    range: '500 - 800 points',
     tone: 'gold',
     benefits: ['15% discount on merchandise', 'VIP event access', 'Personal coach consultation', '+2 more...'],
   },
   {
     name: 'Platinum',
-    range: '5000+ points',
+    range: '800 - 1,000 points',
     tone: 'platinum',
     benefits: ['20% discount on merchandise', 'All Gold benefits', 'Exclusive merchandise', '+2 more...'],
   },
@@ -59,7 +60,7 @@ const inProgressAchievements = [
   {
     title: 'Iron Will',
     description: 'Maintain a 30-day streak',
-    points: 400,
+    points: 300,
     progress: 40,
     current: 12,
     target: 30,
@@ -68,7 +69,7 @@ const inProgressAchievements = [
   {
     title: 'Distance King',
     description: 'Run 500km total',
-    points: 600,
+    points: 500,
     progress: 97,
     current: 487,
     target: 500,
@@ -100,7 +101,38 @@ const earnedAchievements = [
   },
 ];
 
+const achievementIcons = { flame: Flame, moon: Moon, target: Target, zap: Zap };
+
 export default function Rewards() {
+  const [rewardsData, setRewardsData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    let mounted = true;
+    getRewardsData()
+      .then((data) => mounted && setRewardsData(data))
+      .catch((error) => mounted && setErrorMessage(error.message));
+    return () => { mounted = false; };
+  }, []);
+
+  if (errorMessage) {
+    return <BackendState title="Rewards unavailable" message={errorMessage} />;
+  }
+
+  if (!rewardsData) {
+    return <BackendState title="Loading rewards" message="Calculating your latest points and achievements..." />;
+  }
+
+  const normalizeAchievement = (achievement) => ({
+    ...achievement,
+    icon: achievementIcons[achievement.icon] || Medal,
+  });
+  const inProgressAchievements = rewardsData.inProgressAchievements.map(normalizeAchievement);
+  const earnedAchievements = rewardsData.earnedAchievements.map(normalizeAchievement);
+  const activeTier = tiers.find((candidate) => candidate.name === rewardsData.tier.name) || tiers[0];
+  const currentBenefits = activeTier.benefits;
+  const { tier, totalPoints } = rewardsData;
+
   return (
     <div className="rewards-page">
       <header className="rewards-title">
@@ -115,9 +147,9 @@ export default function Rewards() {
             <span className="rewards-star">
               <Star aria-hidden="true" size={19} />
             </span>
-            <h3>Ambassador Level: Silver</h3>
+            <h3>Ambassador Level: {tier.name}</h3>
           </div>
-          <span className="rewards-points-badge">169 Points</span>
+          <span className="rewards-points-badge">{totalPoints.toLocaleString()} Points</span>
         </div>
 
         <div className="benefits-block">
@@ -134,11 +166,11 @@ export default function Rewards() {
 
         <div className="tier-progress">
           <div>
-            <strong>Progress to Gold</strong>
-            <span>2450 / 2500 points</span>
+            <strong>{tier.nextName ? `Progress to ${tier.nextName}` : 'Highest ambassador tier reached'}</strong>
+            <span>{totalPoints.toLocaleString()}{tier.nextAt ? ` / ${tier.nextAt.toLocaleString()} points` : ' points'}</span>
           </div>
-          <ProgressBar value={98} />
-          <p>50 points until Gold level</p>
+          <ProgressBar value={tier.progress} />
+          <p>{tier.nextName ? `${tier.pointsToNext.toLocaleString()} points until ${tier.nextName} level` : 'You have reached Platinum level'}</p>
         </div>
       </section>
 
@@ -146,14 +178,14 @@ export default function Rewards() {
         <h3>Ambassador Tiers</h3>
         <div className="tier-grid">
           {tiers.map((tier) => (
-            <article className={`tier-card ${tier.tone} ${tier.active ? 'is-active' : ''}`} key={tier.name}>
+            <article className={`tier-card ${tier.tone} ${tier.name === rewardsData.tier.name ? 'is-active' : ''}`} key={tier.name}>
               <div className="tier-card-heading">
                 <Award aria-hidden="true" size={31} />
                 <div>
                   <h4>{tier.name}</h4>
                   <p>{tier.range}</p>
                 </div>
-                {tier.active && <span>Active</span>}
+                {tier.name === rewardsData.tier.name && <span>Active</span>}
               </div>
               <ul>
                 {tier.benefits.map((benefit) => (
@@ -166,7 +198,7 @@ export default function Rewards() {
       </section>
 
       <section className="rewards-panel">
-        <h3>In Progress</h3>
+        <h3>In Progress ({inProgressAchievements.length})</h3>
         <div className="achievement-progress-grid">
           {inProgressAchievements.map((achievement) => (
             <ProgressAchievement achievement={achievement} key={achievement.title} />
@@ -175,11 +207,11 @@ export default function Rewards() {
       </section>
 
       <section className="rewards-panel">
-        <h3>Earned Achievements (3)</h3>
+        <h3>Earned Achievements ({earnedAchievements.length})</h3>
         <div className="earned-grid">
-          {earnedAchievements.map((achievement) => (
+          {earnedAchievements.length ? earnedAchievements.map((achievement) => (
             <EarnedAchievement achievement={achievement} key={achievement.title} />
-          ))}
+          )) : <p>No achievements earned yet. Your next synced activity may change that.</p>}
         </div>
       </section>
     </div>
@@ -230,9 +262,18 @@ function EarnedAchievement({ achievement }) {
       </div>
       <div className="earned-status">
         <ShieldCheck aria-hidden="true" size={20} />
-        <small>{achievement.earned}</small>
+        <small>{achievement.earnedAt ? `Earned ${new Intl.DateTimeFormat('en-ZA', { dateStyle: 'medium' }).format(new Date(achievement.earnedAt))}` : 'Earned'}</small>
       </div>
     </article>
+  );
+}
+
+function BackendState({ title, message }) {
+  return (
+    <section className="panel">
+      <h2>{title}</h2>
+      <p>{message}</p>
+    </section>
   );
 }
 

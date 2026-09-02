@@ -5,18 +5,17 @@ import {
   Trophy,
   Users,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import LeaderboardPodium from '../components/LeaderboardPodium.jsx';
 import LeaderboardTable from '../components/LeaderboardTable.jsx';
-
-import { mockLeaderboardUsers } from '../data/leaderboard.mock.js';
+import { getLeaderboardData } from '../api/client.js';
 
 function buildLeaderboard(users) {
   return [...users]
-    .sort((a, b) => b.distanceKm - a.distanceKm)
-    .map((user, index) => ({
+    .sort((a, b) => a.rank - b.rank)
+    .map((user) => ({
       ...user,
-      rank: index + 1,
 
       // Keep decimal stars because distance is our
       // authoritative leaderboard measurement.
@@ -25,7 +24,26 @@ function buildLeaderboard(users) {
 }
 
 export default function Leaderboard() {
-  const leaderboard = buildLeaderboard(mockLeaderboardUsers);
+  const [leaderboardData, setLeaderboardData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    let mounted = true;
+    getLeaderboardData()
+      .then((data) => mounted && setLeaderboardData(data))
+      .catch((error) => mounted && setErrorMessage(error.message));
+    return () => { mounted = false; };
+  }, []);
+
+  if (errorMessage) {
+    return <BackendState title="Leaderboard unavailable" message={errorMessage} />;
+  }
+
+  if (!leaderboardData) {
+    return <BackendState title="Loading leaderboard" message="Calculating the latest club rankings..." />;
+  }
+
+  const leaderboard = buildLeaderboard(leaderboardData.runners);
 
   const topThree = leaderboard.slice(0, 3);
 
@@ -183,5 +201,14 @@ function SummaryCard({
         <p>{detail}</p>
       </div>
     </article>
+  );
+}
+
+function BackendState({ title, message }) {
+  return (
+    <section className="panel">
+      <h2>{title}</h2>
+      <p>{message}</p>
+    </section>
   );
 }

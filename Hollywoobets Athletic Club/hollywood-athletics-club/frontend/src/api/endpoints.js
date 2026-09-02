@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
   stravaAuthUrl: '/api/auth/strava/url',
   stravaSync: '/api/strava/sync',
   rewards: '/api/rewards',
+  leaderboard: '/api/leaderboard',
   community: '/api/community',
   marketplace: '/api/marketplace',
 };

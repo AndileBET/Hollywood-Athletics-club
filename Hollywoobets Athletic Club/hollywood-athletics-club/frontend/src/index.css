@@ -2645,6 +2645,57 @@ button:hover {
   margin-top: 0;
 }
 
+.profile-details-card .detail-row input,
+.profile-details-card .detail-row select {
+  width: min(100%, 260px);
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  outline: 0;
+  color: var(--brand-black);
+  background: var(--brand-white);
+  font: inherit;
+  font-size: 0.84rem;
+}
+
+.profile-details-card .detail-row input:focus,
+.profile-details-card .detail-row select:focus {
+  border-color: var(--brand-purple);
+  box-shadow: 0 0 0 3px rgba(92, 45, 145, 0.1);
+}
+
+.profile-cancel-btn {
+  width: 100%;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  color: var(--brand-purple);
+  background: var(--surface-muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-save-message {
+  margin: 24px 0 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #166534;
+  background: #dcfce7;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.profile-save-message.is-error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
 .profile-signout-btn {
   width: 100%;
   height: 54px;

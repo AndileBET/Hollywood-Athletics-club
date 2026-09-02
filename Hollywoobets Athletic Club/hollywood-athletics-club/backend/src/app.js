@@ -3,8 +3,10 @@ import express from 'express';
 import { env } from './config/env.js';
 import authRoutes from './routes/auth.routes.js';
 import dashboardRoutes from './routes/dashboard.routes.js';
+import leaderboardRoutes from './routes/leaderboard.routes.js';
 import performanceRoutes from './routes/performance.routes.js';
 import profileRoutes from './routes/profile.routes.js';
+import rewardsRoutes from './routes/rewards.routes.js';
 import stravaRoutes from './routes/strava.routes.js';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
 import { requireAuth } from "./middleware/auth.middleware.js";
@@ -53,6 +55,18 @@ app.use(
   "/api/profile",
   requireAuth,
   profileRoutes
+);
+
+app.use(
+  "/api/leaderboard",
+  requireAuth,
+  leaderboardRoutes
+);
+
+app.use(
+  "/api/rewards",
+  requireAuth,
+  rewardsRoutes
 );
 
 app.use(
