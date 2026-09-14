@@ -19,22 +19,6 @@ const navItems = [
 export default function Sidebar({ activePage, onNavigate }) {
   return (
     <>
-      <header className="mobile-topbar">
-        <div className="mobile-brand">
-          <div className="mobile-brand-mark logo-mark">
-            <img
-              src="/images/branding/hollywoodbets-logo.png"
-              alt="Hollywoodbets logo"
-              className="brand-logo"
-            />
-          </div>
-          <div>
-            <p className="eyebrow">Running Together</p>
-            <strong>Hollywood Athletics Club</strong>
-          </div>
-        </div>
-      </header>
-
       <aside className="sidebar">
         <div className="brand-block">
           <div className="brand-mark logo-mark">
@@ -82,7 +66,6 @@ export default function Sidebar({ activePage, onNavigate }) {
             aria-label={label}
           >
             <Icon aria-hidden="true" size={20} />
-            <span>{label}</span>
           </button>
         ))}
       </nav>
