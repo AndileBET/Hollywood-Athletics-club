@@ -3421,7 +3421,7 @@ button:hover {
 .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 286px; height: 100vh; overflow: hidden; z-index: 50; }
 .main-panel { margin-left: 286px; height: 100vh; min-width: 0; overflow-y: auto; overflow-x: hidden; }
 .content-frame { min-height: 100%; }
-.mobile-topbar, .mobile-drawer, .mobile-drawer-backdrop { display: none; }
+.mobile-topbar, .mobile-tab-nav, .mobile-drawer, .mobile-drawer-backdrop { display: none; }
 .performance-title { color: #FFFFFF !important; }
 .marketplace-disclaimer { margin-bottom: 14px; }
 .pagination { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:18px; flex-wrap:wrap; }
