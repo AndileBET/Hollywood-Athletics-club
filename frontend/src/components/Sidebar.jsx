@@ -4,7 +4,6 @@ import {
   CalendarCheck2,
   Home,
   Medal,
-  Menu,
   ShoppingBag,
   UserRound,
   UsersRound,
@@ -34,18 +33,24 @@ export default function Sidebar({ activePage, onNavigate, mobileOpen, onToggleMo
       <header className="mobile-topbar">
         <div className="mobile-brand">
           <StridesBrand compact />
-          <div className="mobile-brand-copy">Powered by Hollywood Athletics Club</div>
-          <button
-            className="mobile-menu-button"
-            type="button"
-            onClick={() => onToggleMobile(!mobileOpen)}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
       </header>
+
+      <nav className="mobile-tab-nav" aria-label="Mobile navigation">
+        {navItems.map(({ label, icon: Icon }) => (
+          <button
+            className={`mobile-tab-button ${activePage === label ? 'is-active' : ''}`}
+            key={label}
+            onClick={() => selectPage(label)}
+            type="button"
+            aria-current={activePage === label ? 'page' : undefined}
+            title={label}
+          >
+            <Icon aria-hidden="true" size={17} />
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
 
       <div
         className={`mobile-drawer-backdrop ${mobileOpen ? 'is-open' : ''}`}
