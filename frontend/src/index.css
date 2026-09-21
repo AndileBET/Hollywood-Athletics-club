@@ -3520,3 +3520,173 @@ button:hover {
 .bookings-loading-card,.bookings-error-card{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow-card)}
 .bookings-loading-card>div,.bookings-error-card>div{display:grid;gap:4px}.bookings-loading-card span,.bookings-error-card span{color:var(--text-muted);font-size:.8rem}.bookings-loading-card svg{color:var(--brand-purple);flex:0 0 auto}.spin{animation:bookings-spin 1s linear infinite}@keyframes bookings-spin{to{transform:rotate(360deg)}}
 @media (max-width:700px){.bookings-loading-card,.bookings-error-card{align-items:flex-start;flex-direction:column}.bookings-error-card .action-button{width:100%;justify-content:center}}
+
+/* Mobile-only navigation refinement: compact bottom tabs. Desktop is unchanged. */
+@media (max-width: 900px) {
+  .mobile-topbar {
+    height: 54px;
+    min-height: 54px;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .mobile-brand {
+    width: 100%;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .mobile-brand .strides-brand {
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .mobile-brand .strides-logo {
+    height: 34px;
+    width: auto;
+    max-width: 82px;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+  }
+
+  /* Bottom tab bar: icons only so all eight sections can fit in one row. */
+  .mobile-tab-nav {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    gap: 2px;
+    width: auto;
+    margin: 0;
+    padding: 6px;
+    min-height: 58px;
+    border: 1px solid #E6DFF0;
+    border-radius: 18px;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 10px 30px rgba(38,24,55,.16);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+  }
+
+  .mobile-tab-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-tab-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 7px 2px;
+    border: 0;
+    border-radius: 13px;
+    background: transparent;
+    color: #676172;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    font: inherit;
+    font-size: 0;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-tab-button span {
+    display: none;
+  }
+
+  .mobile-tab-button svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 auto;
+  }
+
+  .mobile-tab-button.is-active {
+    color: #1A1720;
+    background: #FFDE17;
+    box-shadow: 0 4px 12px rgba(255,222,23,.28);
+  }
+
+  .mobile-tab-button:active {
+    transform: scale(.96);
+  }
+
+  .mobile-menu-button,
+  .mobile-drawer,
+  .mobile-drawer-backdrop {
+    display: none !important;
+  }
+
+  .main-panel {
+    padding-top: 62px;
+    padding-bottom: 88px;
+  }
+}
+
+@media (max-width: 560px) {
+  .mobile-topbar {
+    height: 50px;
+    min-height: 50px;
+    padding: 6px 8px;
+  }
+
+  .mobile-brand .strides-logo {
+    height: 29px;
+    max-width: 70px;
+  }
+
+  .mobile-tab-nav {
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    min-height: 54px;
+    padding: 5px;
+    border-radius: 17px;
+  }
+
+  .mobile-tab-button {
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .mobile-tab-button svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .main-panel {
+    padding-top: 58px;
+    padding-bottom: 82px;
+  }
+}
+
+/* Final mobile fix: keep the navigation outside the topbar stacking context so it is truly fixed to the bottom. */
+@media (max-width: 900px) {
+  .mobile-tab-nav {
+    position: fixed !important;
+    left: 8px !important;
+    right: 8px !important;
+    top: auto !important;
+    bottom: 8px !important;
+    z-index: 1000 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .mobile-tab-nav {
+    left: 4px !important;
+    right: 4px !important;
+    bottom: 4px !important;
+  }
+}

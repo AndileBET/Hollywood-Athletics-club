@@ -15,8 +15,8 @@ const achievementDefinitions = [
     return Math.max(0, ...counts.values(), 0);
   } },
   { id: 'iron-will', title: 'Unstoppable Strides', description: 'Maintain a 30-day activity streak', points: 300, target: 30, icon: 'flame', measure: (a) => calculateCurrentStreak(a) },
-  { id: 'distance-king', title: 'Distance Master', description: 'Complete 500km total', points: 500, target: 500, icon: 'target', measure: (a) => a.reduce((sum, item) => sum + Number(item.distance || 0), 0) },
-  { id: 'speed-demon', title: 'Pace Setter', description: 'Complete a 5km activity under 20 minutes', points: 300, target: 1, icon: 'zap', measure: (a) => a.filter((activity) => Number(activity.distance || 0) >= 5 && durationSeconds(activity.duration) < 1200).length },
+  { id: 'distance-king', title: 'Distance Master', description: 'Complete 500 purple stars total', points: 500, target: 500, icon: 'target', measure: (a) => a.reduce((sum, item) => sum + Number(item.distance || 0), 0) },
+  { id: 'speed-demon', title: 'Pace Setter', description: 'Complete a 5 purple stars activity under 20 minutes', points: 300, target: 1, icon: 'zap', measure: (a) => a.filter((activity) => Number(activity.distance || 0) >= 5 && durationSeconds(activity.duration) < 1200).length },
 ];
 
 export function buildRewards(activities = []) {
