@@ -101,7 +101,7 @@ export default function Dashboard() {
       <section className="panel dashboard-activity-panel">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Recent Activities</p>
+          
             <h2>Recent Activities</h2>
           </div>
         </div>
