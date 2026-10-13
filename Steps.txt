@@ -1,0 +1,23 @@
+Frontend .env:
+VITE_SUPABASE_URL=https://csdvpvnmvxuuzfacwqqy.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_eFFLj-fFcV7p2BiePrEmgw_oKl1aewj
+VITE_API_BASE_URL=http://localhost:3000
+
+Backend .env:
+NODE_ENV=development
+PORT=3000
+CLIENT_URL=http://127.0.0.1:5173
+API_URL=http://127.0.0.1:3000
+ALLOW_SELF_SIGNED_CERTIFICATES=true
+
+SUPABASE_URL=https://csdvpvnmvxuuzfacwqqy.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_TtpIXrekdSnmFMfxf2kdZQ_I1DJ0aLc
+DEFAULT_USER_ID=def9b602-7e16-43d9-adce-344a74079296
+
+STRAVA_CLIENT_ID=266959
+STRAVA_CLIENT_SECRET=4917fe8acc949b67c098beff8e18f79436b7ad8d
+STRAVA_REDIRECT_URI=http://localhost:3000/api/auth/strava/callback
+
+
+
+
