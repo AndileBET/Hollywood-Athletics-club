@@ -64,8 +64,8 @@ img {
 
 /* New css */
 .km-star-icon {
-  width: 12px;
-  height: 12px;
+  width: 19px;
+  height: 19px;
   object-fit: contain;
   display: inline-block;
   vertical-align: -1px;
@@ -88,6 +88,7 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  color: rgb(45, 2, 126); 
 }
 
 .stat-card-detail {
@@ -236,7 +237,7 @@ button:hover {
 .sidebar .eyebrow,
 .sidebar-footer .eyebrow,
 .mobile-nav .eyebrow {
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(23, 2, 73, 0.72);
 }
 
 .sidebar-nav {
@@ -281,7 +282,7 @@ button:hover {
   margin-top: auto;
   padding: 20px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: white;
   backdrop-filter: blur(6px);
 }
 
@@ -294,7 +295,7 @@ button:hover {
 
 .sidebar-footer p:last-child {
   margin: 0;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(252, 249, 249, 0.82);
   font-size: 0.92rem;
 }
 
