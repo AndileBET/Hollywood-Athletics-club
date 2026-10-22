@@ -524,6 +524,54 @@ button:hover {
   box-shadow: var(--shadow-card);
 }
 
+.strides-logo-white {
+  filter: brightness(0) invert(1);
+}
+
+.stat-card[role='button'],
+button.stat-card {
+  width: 100%;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stat-card-danger {
+  border-color: rgba(190, 35, 35, .35);
+}
+
+.dashboard-emergency-button {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  align-self: center;
+  padding: 10px 14px;
+  border: 1px solid rgba(190, 35, 35, .35);
+  border-radius: 999px;
+  background: rgba(128, 18, 24, .85);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(128, 18, 24, .18);
+}
+
+.dashboard-emergency-button:hover {
+  background: #a51f28;
+}
+
+.dashboard-hero-sync {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  min-height: 42px;
+  white-space: nowrap;
+  z-index: 2;
+}
+
 .panel,
 .rewards-level-card,
 .rewards-panel,
@@ -564,6 +612,11 @@ button:hover {
 .community-update-card p,
 .product-card-body p {
   color: var(--text-muted);
+}
+
+.activity-points-note {
+  margin: 4px 0 0;
+  font-size: .8rem;
 }
 
 .connection-panel,
@@ -3512,9 +3565,8 @@ button:hover {
 
 /* Dashboard toolbar removed: sync action now lives inside the hero block. */
 .dashboard-hero-focused { position: relative; }
-.dashboard-hero-sync { position: absolute; top: 22px; right: 22px; z-index: 2; }
 @media (max-width: 720px) {
-  .dashboard-hero-sync { position: static; width: 100%; justify-content: center; margin-bottom: 14px; }
+  .dashboard-hero-sync { position: static; justify-content: center; margin-bottom: 14px; }
   .dashboard-hero-focused { padding-top: 22px; }
 }
 

@@ -56,7 +56,7 @@ export default function Rewards() {
     <div className="rewards-page">
       <header className="rewards-title">
         <h2>Chase your <span className="headline-highlight yellow">next</span> milestone</h2>
-        <p>Every activity point contributes to your Stride Level.</p>
+        <p>Earn 25 points for every 30 minutes of any activity.</p>
       </header>
 
       <section className="rewards-level-card" aria-label="Current Stride Level">
@@ -85,11 +85,6 @@ export default function Rewards() {
                 <div><h4>{tier.name}</h4><p>{tier.maximum ? `${tier.minimum} - ${tier.maximum} points` : `${tier.minimum}+ points`}</p></div>
                 {tier.active ? <span>Active</span> : null}
               </div>
-              <ul>
-                <li>Points earned from club activities</li>
-                <li>Progress shown across Strides</li>
-                <li>Level updates automatically</li>
-              </ul>
             </article>
           ))}
         </div>

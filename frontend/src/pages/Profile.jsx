@@ -8,12 +8,12 @@ export default function Profile() {
   const [errorMessage, setErrorMessage] = useState('');
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ full_name: '', phone: '', gender: '', emergency_contact: '' });
+  const [form, setForm] = useState({ full_name: '', phone: '', gender: '', region: '', emergency_contact: '' });
 
   async function loadProfile() {
     const data = await getProfileData();
     setProfileData(data);
-    setForm({ full_name: data.athlete.name || '', phone: data.athlete.phone || '', gender: data.athlete.gender || '', emergency_contact: data.athlete.emergencyContact || '' });
+    setForm({ full_name: data.athlete.name || '', phone: data.athlete.phone || '', gender: data.athlete.gender || '', region: data.athlete.region || '', emergency_contact: data.athlete.emergencyContact || '' });
   }
 
   useEffect(() => { loadProfile().catch((error) => setErrorMessage(error.message)); }, []);
@@ -59,7 +59,7 @@ export default function Profile() {
         <div className="profile-actions"><button type="button" className="profile-edit-btn" onClick={() => setEditing(true)}><Pencil size={18} /> Edit Profile</button><button type="button" className="profile-signout-btn" onClick={handleSignOut}><LogOut size={18} /> Sign Out</button></div>
       </div>
 
-      {editing ? <div className="profile-modal-backdrop"><form className="profile-modal" onSubmit={handleSave}><div className="profile-modal-header"><div><p className="eyebrow">Edit Profile</p><h3>Member details</h3></div><button type="button" className="icon-button" onClick={() => setEditing(false)} aria-label="Close"><X size={19} /></button></div><label>Full name<input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} required /></label><label>Phone<input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></label><label>Gender<select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}><option value="">Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></label><label>Emergency contact<input value={form.emergency_contact} onChange={(e) => setForm({ ...form, emergency_contact: e.target.value })} /></label><div className="profile-modal-actions"><button type="button" className="secondary-button" onClick={() => setEditing(false)}>Cancel</button><button type="submit" className="action-button" disabled={saving}>{saving ? 'Saving...' : 'Save changes'}</button></div></form></div> : null}
+        {editing ? <div className="profile-modal-backdrop"><form className="profile-modal" onSubmit={handleSave}><div className="profile-modal-header"><div><p className="eyebrow">Edit Profile</p><h3>Member details</h3></div><button type="button" className="icon-button" onClick={() => setEditing(false)} aria-label="Close"><X size={19} /></button></div><label>Full name<input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} required /></label><label>Phone<input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} /></label><label>Gender<select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}><option value="">Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></label><label>Region<input list="region-options" value={form.region} onChange={(e) => setForm({ ...form, region: e.target.value })} placeholder="Type your region" /><datalist id="region-options"><option value="Gauteng" /><option value="KwaZulu-Natal" /><option value="Western Cape" /><option value="Eastern Cape" /><option value="Free State" /><option value="Limpopo" /><option value="Mpumalanga" /><option value="North West" /><option value="Northern Cape" /></datalist></label><label>Emergency contact<input value={form.emergency_contact} onChange={(e) => setForm({ ...form, emergency_contact: e.target.value })} /></label><div className="profile-modal-actions"><button type="button" className="secondary-button" onClick={() => setEditing(false)}>Cancel</button><button type="submit" className="action-button" disabled={saving}>{saving ? 'Saving...' : 'Save changes'}</button></div></form></div> : null}
     </div>
   );
 }

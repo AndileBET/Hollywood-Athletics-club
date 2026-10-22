@@ -27,7 +27,7 @@ export function normalizeStravaActivity(activity, userId) {
   const movingTime = Number(activity.moving_time || activity.elapsed_time || 0);
   const paceSecondsPerKm = distanceKm > 0 ? Number((movingTime / distanceKm).toFixed(2)) : null;
   const startDate = activity.start_date || null;
-  const points = calculateActivityPoints(distanceKm);
+  const points = calculateActivityPoints(distanceKm, movingTime);
 
   return {
     user_id: userId,
@@ -108,7 +108,7 @@ function toUiActivity(row) {
     duration: rawDuration,
     pace: row.pace_seconds_per_km ? secondsToPace(row.pace_seconds_per_km) : row.pace || '-',
     elevation: `${Math.round(Number(row.total_elevation_gain ?? row.elevation_metres ?? 0))} m`,
-    points: Number(row.points ?? row.points_earned ?? calculateActivityPoints(distance)),
+    points: Number(row.points ?? row.points_earned ?? calculateActivityPoints(distance, movingSeconds)),
     type: row.activity_type || row.sport_type || 'Run',
     movingTimeSeconds: movingSeconds,
     startDate: row.start_date || row.activity_date || null,

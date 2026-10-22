@@ -1,5 +1,5 @@
-export function calculateActivityPoints(distanceKm) {
-  return Math.round(Number(distanceKm || 0) * 10);
+export function calculateActivityPoints(_distanceKm, durationSeconds = 0) {
+  return Math.floor(Number(durationSeconds || 0) / (30 * 60)) * 25;
 }
 
 export function calculateTotalPoints(activities = []) {

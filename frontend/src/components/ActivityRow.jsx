@@ -1,11 +1,21 @@
-import { Clock3, Footprints, Gauge, Star } from 'lucide-react';
+import { Bike, Clock3, Dumbbell, Footprints, Gauge, PersonStanding, Star, Waves } from 'lucide-react';
+
+function ActivityIcon({ type }) {
+  const value = String(type || '').toLowerCase();
+  if (value.includes('weight') || value.includes('strength') || value.includes('training')) return Dumbbell;
+  if (value.includes('ride') || value.includes('cycle') || value.includes('bike')) return Bike;
+  if (value.includes('swim')) return Waves;
+  if (value.includes('yoga') || value.includes('walk')) return PersonStanding;
+  return Footprints;
+}
 
 export default function ActivityRow({ activity, compact = false, hideDistance = false }) {
   const type = activity.type || 'Activity';
+  const Icon = ActivityIcon({ type });
   return (
     <article className={`activity-row ${compact ? 'is-compact' : ''}`}>
       <div className="activity-main">
-        <div className="activity-type"><Footprints aria-hidden="true" size={17} /></div>
+        <div className="activity-type"><Icon aria-hidden="true" size={17} /></div>
         <div>
           <h3>{activity.name}</h3>
           <p>{activity.date} · {type}</p>

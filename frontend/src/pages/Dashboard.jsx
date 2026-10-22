@@ -1,4 +1,4 @@
-import { ArrowUpRight, Award, Flame, LoaderCircle, RefreshCw, Trophy, Zap } from 'lucide-react';
+import { AlertTriangle, Award, Flame, LoaderCircle, RefreshCw, Trophy } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import ActivityRow from '../components/ActivityRow.jsx';
 import Pagination from '../components/Pagination.jsx';
@@ -52,6 +52,10 @@ export default function Dashboard() {
     }
   }
 
+  function handleEmergency() {
+    window.alert('Emergency button selected.');
+  }
+
   const activities = dashboardData?.activities || [];
   const totalPages = Math.max(1, Math.ceil(activities.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -88,12 +92,14 @@ export default function Dashboard() {
       </section>
 
       <section className="stat-grid" aria-label="Dashboard summary">
+        <button className="dashboard-emergency-button" onClick={handleEmergency} type="button">
+          <AlertTriangle size={18} /> Emergency
+        </button>
         <StatCard icon={Award} label="Total Points" value={Number(dashboardStats.totalPoints || 0).toLocaleString()} detail={
   <>
-    1 <img src="/images/branding/stars.png" alt="" className="km-star-icon" /> = 10 points
+    25 points every 30 min
   </>
 } />
-        <StatCard icon={Zap} label="Activities" value={dashboardStats.activitiesThisMonth || 0} detail={new Date().toLocaleString('en-ZA', { month: 'long', year: 'numeric' })} />
         <StatCard icon={Flame} label="Weekly Streak" value={`${dashboardStats.weeklyStreak || 0} week${dashboardStats.weeklyStreak === 1 ? '' : 's'}`} detail="Activity-based"/>
         <StatCard icon={Trophy} label="Stride Level" value={currentLevel} detail="Your level" />
       </section>
@@ -103,6 +109,7 @@ export default function Dashboard() {
           <div>
           
             <h2>Recent Activities</h2>
+            <p className="activity-points-note">All activities earn 25 points per completed 30 minutes.</p>
           </div>
         </div>
         <div className="activity-list dashboard-activity-list">
@@ -118,16 +125,17 @@ export default function Dashboard() {
   );
 }
 
-function StatCard({ icon: Icon, label, value, detail }) {
+function StatCard({ icon: Icon, label, value, detail, onClick, danger = false }) {
+  const Tag = onClick ? 'button' : 'article';
   return (
-    <article className="stat-card">
+    <Tag className={`stat-card${danger ? ' stat-card-danger' : ''}`} onClick={onClick} type={onClick ? 'button' : undefined}>
       <span className="stat-icon"><Icon aria-hidden="true" size={20} /></span>
       <div>
         <span>{label}</span>
         <strong>{value}</strong>
         <p className="stat-card-detail">{detail}</p>
       </div>
-    </article>
+    </Tag>
   );
 }
 
