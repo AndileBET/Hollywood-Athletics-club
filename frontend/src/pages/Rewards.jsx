@@ -56,7 +56,7 @@ export default function Rewards() {
     <div className="rewards-page">
       <header className="rewards-title">
         <h2>Chase your <span className="headline-highlight yellow">next</span> milestone</h2>
-        <p>Earn 25 points for every 30 minutes of any activity.</p>
+        <p>Distance activities earn distance points; other activities earn 25 points per completed 30 minutes.</p>
       </header>
 
       <section className="rewards-level-card" aria-label="Current Stride Level">

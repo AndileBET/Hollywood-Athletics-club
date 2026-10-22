@@ -96,10 +96,10 @@ export default function Dashboard() {
           <AlertTriangle size={18} /> Emergency
         </button>
         <StatCard icon={Award} label="Total Points" value={Number(dashboardStats.totalPoints || 0).toLocaleString()} detail={
-  <>
-    25 points every 30 min
-  </>
-} />
+          <>
+            1 <img src="/images/branding/stars.png" alt="" className="km-star-icon" /> = 10 points
+          </>
+        } />
         <StatCard icon={Flame} label="Weekly Streak" value={`${dashboardStats.weeklyStreak || 0} week${dashboardStats.weeklyStreak === 1 ? '' : 's'}`} detail="Activity-based"/>
         <StatCard icon={Trophy} label="Stride Level" value={currentLevel} detail="Your level" />
       </section>
@@ -109,7 +109,7 @@ export default function Dashboard() {
           <div>
           
             <h2>Recent Activities</h2>
-            <p className="activity-points-note">All activities earn 25 points per completed 30 minutes.</p>
+            <p className="activity-points-note">Distance activities use kilometres; other activities earn 25 points per completed 30 minutes.</p>
           </div>
         </div>
         <div className="activity-list dashboard-activity-list">
@@ -133,7 +133,7 @@ function StatCard({ icon: Icon, label, value, detail, onClick, danger = false })
       <div>
         <span>{label}</span>
         <strong>{value}</strong>
-        <p className="stat-card-detail">{detail}</p>
+        {detail ? <p className="stat-card-detail">{detail}</p> : null}
       </div>
     </Tag>
   );

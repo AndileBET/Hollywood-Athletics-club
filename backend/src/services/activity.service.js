@@ -27,7 +27,8 @@ export function normalizeStravaActivity(activity, userId) {
   const movingTime = Number(activity.moving_time || activity.elapsed_time || 0);
   const paceSecondsPerKm = distanceKm > 0 ? Number((movingTime / distanceKm).toFixed(2)) : null;
   const startDate = activity.start_date || null;
-  const points = calculateActivityPoints(distanceKm, movingTime);
+  const activityType = activity.type || activity.sport_type || 'Run';
+  const points = calculateActivityPoints(distanceKm, movingTime, activityType);
 
   return {
     user_id: userId,
@@ -36,7 +37,7 @@ export function normalizeStravaActivity(activity, userId) {
     activity_date: startDate ? startDate.slice(0, 10) : new Date().toISOString().slice(0, 10),
     name: activityName,
     sport_type: activity.sport_type || activity.type || 'Run',
-    activity_type: activity.type || activity.sport_type || 'Run',
+    activity_type: activityType,
     distance_km: distanceKm,
     duration: secondsToDuration(movingTime),
     pace: secondsToPace(paceSecondsPerKm),
@@ -108,7 +109,7 @@ function toUiActivity(row) {
     duration: rawDuration,
     pace: row.pace_seconds_per_km ? secondsToPace(row.pace_seconds_per_km) : row.pace || '-',
     elevation: `${Math.round(Number(row.total_elevation_gain ?? row.elevation_metres ?? 0))} m`,
-    points: Number(row.points ?? row.points_earned ?? calculateActivityPoints(distance, movingSeconds)),
+    points: Number(row.points ?? row.points_earned ?? calculateActivityPoints(distance, movingSeconds, row.activity_type || row.sport_type || 'Run')),
     type: row.activity_type || row.sport_type || 'Run',
     movingTimeSeconds: movingSeconds,
     startDate: row.start_date || row.activity_date || null,
